@@ -9,3 +9,45 @@ h1 {
 h2 {
     text-align: center;
 }
+
+#topvis {
+    display: flex;
+    flex-direction: row;
+    object-fit: contain;
+    background-color: plum;
+    height:450px
+}
+
+#mainvis {
+    width: 60%;
+    padding-right: 10px;
+    object-fit: contain;
+    background-color: cadetblue;
+}
+
+#detailvis {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding-right: 10px;
+    object-fit: contain;
+    background-color: pink;
+}
+
+#detailgraph {
+    height: 65%;
+    object-fit: contain;
+    background-color: palegoldenrod;
+}
+
+#infobox {
+    height: 35%;
+    object-fit: contain;
+    background-color: palevioletred;
+}
+
+
+#slider {
+    background-color: lightgreen;
+    height: 75px;
+}
