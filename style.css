@@ -50,3 +50,9 @@ h2 {
     background-color: lightgreen;
     height: 75px;
 }
+
+.unemploymentline {
+    stroke:red;
+    stroke-width: 5px;
+    fill: none;
+}
