@@ -11,9 +11,9 @@ const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 function build_plots() {
 
   // reading in the data
-  d3.csv("data/4200ProjectData.csv", 
+  d3.csv("data/NoNullsData.csv", 
   function(d){
-    return { DATE : d3.timeParse("%f/%e/%Y")(d.date), 
+    return { DATE : d3.timeParse("%f/%e/%Y")(d.DATE), 
             Payrolls : d.Payrolls,
             CPI : d.CPI,
             UClaims : d.UClaims,
@@ -23,7 +23,6 @@ function build_plots() {
 
   ).then((data) => {
 
-    
     // getting max values for indicators 
     const MaxPayroll = d3.max(data, (d) => { return parseInt(d.Payrolls); });
     console.log(MaxPayroll)
@@ -37,7 +36,8 @@ function build_plots() {
     console.log(MaxUClaims)
 
     // first and last date
-    const MaxDate = ((d) => {new Date(Math.max(d.DATE))});
+    //const MaxDate = function(d) {new Date(Math.max.apply(null, d.DATE))};
+    //const MaxDate = new Date(Math.max.apply(null, data.DATE));
     console.log(MaxDate)
     //d3.max(data, (d) => { return parseInt(d.DATE); });
     //const MinDate = d3.max(data, (d) => { return parseInt(d.DATE); });
@@ -61,11 +61,11 @@ function build_plots() {
 
     // plot unemployment rate
     // plot points
-    const unemployment = MAIN.append('path')
+    const payrolls = MAIN.append('path')
                         .datum(data) // passed from .then  
                         .attr("d", d3.line()
-                            .x(function(d) {return MainXScale(d.DATE)})
-                            .y(function(d) {return MainYScale(d.Payrolls/MaxPayroll)}))
+                            .x((d) => {return MainXScale(d.DATE)})
+                            .y((d) => {return MainYScale(d.Payrolls/MaxPayroll)}))
                         .attr("class", "unemploymentline"); 
 
     // Add x axis to vis  
