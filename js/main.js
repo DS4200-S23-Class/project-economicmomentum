@@ -1,6 +1,6 @@
 // constants for plot design
 const FRAME_HEIGHT = 450;
-const FRAME_WIDTH = 600; 
+const FRAME_WIDTH = 650; 
 const MARGINS = {left: 25, right: 25, top: 25, bottom: 25};
 
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
@@ -13,7 +13,7 @@ function build_plots() {
   // reading in the data
   d3.csv("data/NoNullsData.csv", 
   function(d){
-    return { DATE : d3.timeParse("%f/%e/%Y")(d.DATE), 
+    return { DATE : d3.timeParse("%-m/%-e/%Y")(d.DATE), 
             Payrolls : d.Payrolls,
             CPI : d.CPI,
             UClaims : d.UClaims,
@@ -35,16 +35,16 @@ function build_plots() {
     const MaxUClaims = d3.max(data, (d) => { return parseInt(d.UClaims); });
     console.log(MaxUClaims)
 
-    // first and last date
-    //const MaxDate = function(d) {new Date(Math.max.apply(null, d.DATE))};
-    //const MaxDate = new Date(Math.max.apply(null, data.DATE));
-    console.log(MaxDate)
-    //d3.max(data, (d) => { return parseInt(d.DATE); });
-    //const MinDate = d3.max(data, (d) => { return parseInt(d.DATE); });
+    const dates = [];
+    for (let obj of data) {
+      dates.push(obj.DATE)
+    }
+
+    const domain = d3.extent(dates);
 
     //setting scales
     const MainXScale = d3.scaleTime() 
-                      .domain([MinDate, MaxDate]) 
+                      .domain(domain) 
                       .range([0, VIS_WIDTH]); 
 
     const MainYScale = d3.scaleLinear() 
@@ -59,20 +59,51 @@ function build_plots() {
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame"); 
 
-    // plot unemployment rate
-    // plot points
+    // plot payroll counts
     const payrolls = MAIN.append('path')
                         .datum(data) // passed from .then  
                         .attr("d", d3.line()
-                            .x((d) => {return MainXScale(d.DATE)})
-                            .y((d) => {return MainYScale(d.Payrolls/MaxPayroll)}))
-                        .attr("class", "unemploymentline"); 
+                            .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                            .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
+                        .attr("class", "payrollline"); 
 
+    // plot unemployment rate
+    const unemployment = MAIN.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                            .y((d) => {return MainYScale(d.URate/MaxURate) + MARGINS.top}))
+                        .attr("class", "urateline"); 
+    
+    // plot PPI
+    const ppi = MAIN.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                            .y((d) => {return MainYScale(d.PPI/MaxPPI) + MARGINS.top}))
+                        .attr("class", "ppiline"); 
+
+    // plot CPI
+    const cpi = MAIN.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                            .y((d) => {return MainYScale(d.CPI/MaxCPI) + MARGINS.top}))
+                        .attr("class", "cpiline");
+
+     // plot claims
+     const claims = MAIN.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                            .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
+                        .attr("class", "claimsline");
+                        
     // Add x axis to vis  
     MAIN.append("g") 
         .attr("transform", "translate(" + MARGINS.left + 
               "," + (VIS_HEIGHT + MARGINS.top) + ")") 
-        .call(d3.axisBottom(MainXScale).ticks(4)) 
+        .call(d3.axisBottom(MainXScale).ticks(8)) 
           .attr("font-size", '10px'); 
 
     // Add y axis to vis  
