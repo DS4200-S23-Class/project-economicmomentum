@@ -110,7 +110,8 @@ function build_plots() {
     MAIN.append("g") 
         .attr("transform", "translate(" + MARGINS.left + 
               "," + (MARGINS.top) + ")") 
-        .call(d3.axisLeft(MainYScale).ticks(4)) 
+        .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
+            return (d * 100) + "%"}))
           .attr("font-size", '10px'); 
 
   });
