@@ -65,7 +65,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                             .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
-                        .attr("class", "payrollline data-point"); 
+                        .attr("class", "payrollline"); 
 
     // plot unemployment rate
     const unemployment = MAIN.append('path')
@@ -121,25 +121,52 @@ function build_plots() {
                         .style("opacity", 0);
 
     function mouseMove(event, d) {
-        TOOLTIP.html("tooltip test")
+        TOOLTIP.html("Date: " + d.DATE + "</br>" + "Value: " + d.Payrolls)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "py");
+        console.log(d);
     };
 
-    function barMouseOver(event, d) {
-        TOOLTIP.style("opacity", 1);
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+        
     };
 
 
     function mouseLeave(event, d) {
         TOOLTIP.style("opacity", 0);
+        
     };
 
 
-    MAIN.selectAll(".path")
-        .on("mouseOver", barMouseOver)
+    MAIN.selectAll(".claimsline")
+        .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
-        .on("mouseLeave", mouseLeave);
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".cpiline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".ppiline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".urateline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".payrollline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    
+
+ 
 
   });
 
