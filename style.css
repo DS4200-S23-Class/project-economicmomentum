@@ -79,3 +79,12 @@ h2 {
     fill: none;
 }
 
+.tooltip{
+  position: absolute;
+  background-color: silver;
+  border:  solid;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px;
+}
+

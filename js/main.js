@@ -40,7 +40,7 @@ function build_plots() {
       dates.push(obj.DATE)
     }
 
-    const domain = d3.extent(dates);
+    const domain = d3.extent(data, (d) => d.DATE);
 
     //setting scales
     const MainXScale = d3.scaleTime() 
@@ -65,7 +65,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                             .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
-                        .attr("class", "payrollline"); 
+                        .attr("class", "payrollline data-point"); 
 
     // plot unemployment rate
     const unemployment = MAIN.append('path')
@@ -113,8 +113,35 @@ function build_plots() {
         .call(d3.axisLeft(MainYScale).ticks(4)) 
           .attr("font-size", '10px'); 
 
+    // add a tooltip to the visualization
+    const TOOLTIP = d3.select("#mainvis")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+
+    function mouseMove(event, d) {
+        TOOLTIP.html("tooltip test")
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "py");
+    };
+
+    function barMouseOver(event, d) {
+        TOOLTIP.style("opacity", 1);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+
+    MAIN.selectAll(".path")
+        .on("mouseOver", barMouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseLeave", mouseLeave);
+
   });
 
-}
+};
 
 build_plots()
