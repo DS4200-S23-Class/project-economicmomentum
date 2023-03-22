@@ -200,7 +200,7 @@ function build_plots() {
     // constants for plot design
     const DETAIL_FRAME_HEIGHT = 225;
     const DETAIL_FRAME_WIDTH = 350; 
-    const DETAIL_MARGINS = {left: 25, right: 25, top: 25, bottom: 25};
+    const DETAIL_MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
 
     const DETAIL_VIS_HEIGHT = DETAIL_FRAME_HEIGHT - DETAIL_MARGINS.top - DETAIL_MARGINS.bottom;
     const DETAIL_VIS_WIDTH = DETAIL_FRAME_WIDTH - DETAIL_MARGINS.left - DETAIL_MARGINS.right; 
