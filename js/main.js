@@ -1,7 +1,7 @@
 // constants for plot design
 const FRAME_HEIGHT = 450;
 const FRAME_WIDTH = 650; 
-const MARGINS = {left: 25, right: 25, top: 25, bottom: 25};
+const MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
 
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
@@ -14,26 +14,31 @@ function build_plots() {
   d3.csv("data/NoNullsData.csv", 
   function(d){
     return { DATE : d3.timeParse("%-m/%-e/%Y")(d.DATE), 
-            Payrolls : d.Payrolls,
-            CPI : d.CPI,
-            UClaims : d.UClaims,
-            PPI : d.PPI,
-            URate : d.URate}
+            Payrolls : +d.Payrolls,
+            CPI : +d.CPI,
+            UClaims : +d.UClaims,
+            PPI : +d.PPI,
+            URate : +d.URate}
   }
 
   ).then((data) => {
 
+    // printing the first 10 lines of the data
+    console.log(data);
+    console.log("First 10 Lines of the Data:");
+    console.log(data.slice(0, 10));
+
     // getting max values for indicators 
-    const MaxPayroll = d3.max(data, (d) => { return parseInt(d.Payrolls); });
-    console.log(MaxPayroll)
-    const MaxCPI = d3.max(data, (d) => { return parseInt(d.CPI); });
-    console.log(MaxCPI)
-    const MaxPPI = d3.max(data, (d) => { return parseInt(d.PPI); });
-    console.log(MaxPPI)
-    const MaxURate = d3.max(data, (d) => { return parseInt(d.URate); });
-    console.log(MaxURate)
-    const MaxUClaims = d3.max(data, (d) => { return parseInt(d.UClaims); });
-    console.log(MaxUClaims)
+    const MaxPayroll = d3.max(data, (d) => { return d.Payrolls; });
+   
+    const MaxCPI = d3.max(data, (d) => { return d.CPI; });
+    
+    const MaxPPI = d3.max(data, (d) => { return d.PPI; });
+  
+    const MaxURate = d3.max(data, (d) => { return d.URate; });
+    
+    const MaxUClaims = d3.max(data, (d) => { return d.UClaims; });
+    
 
     const dates = [];
     for (let obj of data) {
@@ -120,11 +125,11 @@ function build_plots() {
                         .attr("class", "tooltip")
                         .style("opacity", 0);
 
-    function mouseMove(event, d) {
-        TOOLTIP.html("Date: " + d.DATE + "</br>" + "Value: " + d.Payrolls)
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "py");
-        console.log(d);
+    function mouseMove(event, d, title) {
+      TOOLTIP.html("Date: " + d.DATE + "</br>" + "Value: " + d.Payrolls)
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 50) + "px");
+              console.log(d);
     };
 
     function mouseOver(event, d) {
