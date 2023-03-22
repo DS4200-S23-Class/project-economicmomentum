@@ -88,3 +88,8 @@ h2 {
   padding: 5px;
 }
 
+.payrolldetailline {
+    stroke:orange;
+    stroke-width: 2px;
+    fill: none;
+}
