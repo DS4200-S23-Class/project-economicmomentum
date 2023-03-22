@@ -13,7 +13,7 @@ function build_plots() {
   // reading in the data
   d3.csv("data/NoNullsData.csv", 
   function(d){
-    return { DATE : d3.timeParse("%-m/%-e/%Y")(d.DATE), 
+    return { DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,
             CPI : +d.CPI,
             UClaims : +d.UClaims,
@@ -24,7 +24,6 @@ function build_plots() {
   ).then((data) => {
 
     // printing the first 10 lines of the data
-    console.log(data);
     console.log("First 10 Lines of the Data:");
     console.log(data.slice(0, 10));
 
@@ -125,8 +124,36 @@ function build_plots() {
                         .attr("class", "tooltip")
                         .style("opacity", 0);
 
-    function mouseMove(event, d, title) {
-      TOOLTIP.html("Date: " + d.DATE + "</br>" + "Value: " + d.Payrolls)
+    function mouseMovePayroll(event, d) {
+      TOOLTIP.html("Payrolls")
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 50) + "px");
+              console.log(d);
+    };
+
+    function mouseMoveClaims(event, d) {
+      TOOLTIP.html("Jobless Claims")
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 50) + "px");
+              console.log(d);
+    };
+
+    function mouseMoveCPI(event, d) {
+      TOOLTIP.html("Consumer Price Index (CPI)")
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 50) + "px");
+              console.log(d);
+    };
+
+    function mouseMovePPI(event, d) {
+      TOOLTIP.html("Producer Price Index (PPI)")
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 50) + "px");
+              console.log(d);
+    };
+
+    function mouseMoveURate(event, d) {
+      TOOLTIP.html("Unemployment Rate")
               .style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY - 50) + "px");
               console.log(d);
@@ -146,27 +173,27 @@ function build_plots() {
 
     MAIN.selectAll(".claimsline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
+        .on("mousemove", mouseMoveClaims)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".cpiline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
+        .on("mousemove", mouseMoveCPI)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".ppiline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
+        .on("mousemove", mouseMovePPI)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".urateline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
+        .on("mousemove", mouseMoveURate)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".payrollline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
+        .on("mousemove", mouseMovePayroll)
         .on("mouseleave", mouseLeave);
 
     
