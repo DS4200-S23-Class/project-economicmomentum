@@ -1,3 +1,4 @@
+/* general styling */
 body {
     font-family: Arial;
 }
@@ -10,6 +11,7 @@ h2 {
     text-align: center;
 }
 
+/* making flexboxes */
 #topvis {
     display: flex;
     flex-direction: row;
@@ -31,24 +33,40 @@ h2 {
     object-fit: contain;
 }
 
+#indicatorselection {
+    display: flex;
+    flex-direction: row;
+    object-fit: contain;
+}
+
+#dropdown {
+    width: 70%;
+    object-fit: contain;
+}
+
+#subbutton {
+    width: 30%;
+    object-fit: contain;
+}
+
 #detailgraph {
-    height: 65%;
+    height: 70%;
     object-fit: contain;
     background-color: palegoldenrod;
 }
 
 #infobox {
-    height: 35%;
+    height: 30%;
     object-fit: contain;
     background-color: palevioletred;
 }
-
 
 #slider {
     background-color: cadetblue;
     height: 75px;
 }
 
+/* line styling for visuals */
 .payrollline {
     stroke:red;
     stroke-width: 2px;
@@ -79,6 +97,13 @@ h2 {
     fill: none;
 }
 
+.payrolldetailline {
+    stroke:orange;
+    stroke-width: 2px;
+    fill: none;
+}
+
+/* tootltip styling */
 .tooltip{
   position: absolute;
   background-color: silver;
@@ -88,8 +113,9 @@ h2 {
   padding: 5px;
 }
 
-.payrolldetailline {
-    stroke:orange;
-    stroke-width: 2px;
-    fill: none;
+/* info box styling */
+#detailtextbox {
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
 }

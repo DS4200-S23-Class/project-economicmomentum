@@ -31,19 +31,55 @@
         <h2>Visualization</h2>
         <h3>Economic Indicators Between 1986 and 2021</h3>
 
+        <!-- div to hold main visual, dropdown, detail vis, and info box-->
         <div id="topvis">
-            <div id="mainvis">
-            </div>
+
+            <!-- div to hold main visual-->
+            <div id="mainvis"></div>
+
+            <!-- div to hold dropdown, detail vis, and info box-->
             <div id="detailvis">
+
+                <!-- div to hold form and submit button for focus-->
+                <div id="indicatorselection">
+
+                    <!-- div to hold dropdown for focus selection-->
+                    <div id="dropdown">
+                        <form id="selectedindicator">
+                            <label for="indicators">Choose an indicator:</label>
+                            <select name="indicators" id="indicators">
+                             <option value="payrolls">Payroll</option>
+                             <option value="urate">Unemployment Rate</option>
+                             <option value="cpi">CPI</option>
+                             <option value="ppi">PPI</option>
+                              <option value="uclaims">Unemployment Claims</option>
+                             </select>
+                        </form>    
+                    </div>
+
+                    <!-- div to hold submit button-->
+                    <div id="subbutton">
+                        <button type="button" id="subindicator">Submit</button>
+                    </div> 
+
+                </div>
+
+                <!-- div to hold detailed focus graph-->
                 <div id="detailgraph">
                     <p>EX: payroll detail graph</p>
                 </div>
+
+                <!-- div to hold information box-->
                 <div id="infobox">
-                    <p>info box</p>
+                    <div id="detailtextbox">
+                        <h3 id="indicatortext">indicator</h3>
+                        <p id="indicatorinfotext">info</p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- div to hold years slider-->
         <div id="slider">
             <p>slider</p>
         </div>
