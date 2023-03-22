@@ -20,8 +20,8 @@ h2 {
 }
 
 #mainvis {
-    width: 60%;
-    padding-left: 30px;
+    width: 65%;
+    padding-lft: 30px;
     object-fit: contain;
     justify-items: center;
 }
@@ -29,7 +29,7 @@ h2 {
 #detailvis {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 35%;
     object-fit: contain;
 }
 
