@@ -195,8 +195,54 @@ function build_plots() {
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMovePayroll)
         .on("mouseleave", mouseLeave);
+  });
 
+};
+
+build_plots()
+
+
+//global constant for detail vis info box
+//constants for indicator header
+const indicator_text_cpi = "CPI"
+const indicator_text_ppi = "PPI"
+const indicator_text_urate = "Unemployment Rate"
+const indicator_text_uclaims = "Unemployment Claims"
+const indicator_text_payrolls = "Payrolls"
+
+//constants for the indicator information
+const indicator_info_text_cpi = "CPI info"
+const indicator_info_text_ppi = "PPI info"
+const indicator_info_text_urate = "Unemployment Rate info"
+const indicator_info_text_uclaims = "Unemployment Claims info"
+const indicator_info_text_payrolls = "Payrolls info"
+
+function intial_detail() {
+  // reading in the data
+  d3.csv("data/NoNullsData.csv", 
+  function(d){
+    return { DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
+            Payrolls : +d.Payrolls,
+            CPI : +d.CPI,
+            UClaims : +d.UClaims,
+            PPI : +d.PPI,
+            URate : +d.URate}
+  }
+  ).then((data) => {
+
+    // getting max values for indicators 
+    const MaxPayroll = d3.max(data, (d) => { return d.Payrolls; });
+    const MaxCPI = d3.max(data, (d) => { return d.CPI; });
+    const MaxPPI = d3.max(data, (d) => { return d.PPI; });
+    const MaxURate = d3.max(data, (d) => { return d.URate; });
+    const MaxUClaims = d3.max(data, (d) => { return d.UClaims; });
     
+    const dates = [];
+    for (let obj of data) {
+      dates.push(obj.DATE)
+    }
+    const domain = d3.extent(data, (d) => d.DATE);
+
     // constants for plot design
     const DETAIL_FRAME_HEIGHT = 225;
     const DETAIL_FRAME_WIDTH = 550; 
@@ -204,7 +250,6 @@ function build_plots() {
 
     const DETAIL_VIS_HEIGHT = DETAIL_FRAME_HEIGHT - DETAIL_MARGINS.top - DETAIL_MARGINS.bottom;
     const DETAIL_VIS_WIDTH = DETAIL_FRAME_WIDTH - DETAIL_MARGINS.left - DETAIL_MARGINS.right; 
-
 
     //setting scales
     const DetailXScale = d3.scaleTime() 
@@ -245,6 +290,52 @@ function build_plots() {
           .attr("font-size", '10px'); 
   });
 
-};
+  document.getElementById('indicatortext').innerHTML = indicator_text_payrolls;
+  document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_payrolls;
+}
 
-build_plots()
+intial_detail();
+
+// getting information from the change of the dropdown
+function submitClicked() {
+  // getting selected x value from drop down
+  let indicator = document.getElementById("indicators");
+  let selected_ind = indicator.options[indicator.selectedIndex].value;
+  let selected_index = indicator.selectedIndex;
+
+  update_detail(selected_index);
+}
+
+//actually altering the info box
+function update_detail(x) {
+
+  if (x == 1) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_urate;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_urate;
+  } 
+  
+  if (x == 2) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_cpi;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_cpi;
+  } 
+  
+  if (x == 3) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_ppi;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_ppi;
+  } 
+  
+  if (x == 4) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_uclaims;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_uclaims;
+  } 
+  
+  if (x == 0) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_payrolls;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_payrolls;
+  }
+
+}
+
+
+// Add event handler to button 
+document.getElementById('selectedindicator').addEventListener('change', submitClicked);
