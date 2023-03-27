@@ -124,6 +124,14 @@ function build_plots() {
                         .attr("class", "tooltip")
                         .style("opacity", 0);
 
+    function mouseMove(event, d) {
+
+        let current_class = d.getAttribute("class");
+        tooltip.html("Metric: " + current_class)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px");
+    };
+
     function mouseMovePayroll(event, d) {
       TOOLTIP.html("Payrolls")
               .style("left", (event.pageX + 10) + "px")
@@ -173,7 +181,7 @@ function build_plots() {
 
     MAIN.selectAll(".claimsline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMoveClaims)
+        .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".cpiline")
