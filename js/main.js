@@ -124,48 +124,16 @@ function build_plots() {
                         .attr("class", "tooltip")
                         .style("opacity", 0);
 
-    function mouseMove(event, d) {
 
-        let current_class = d.getAttribute("class");
-        tooltip.html("Metric: " + current_class)
+
+    function mouseMove(event, d) {
+        let current_class = this.classList
+        console.log(current_class)
+        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date:" + MainXScale.invert(event.pageX, event.pageY) + "</br>" + "Value: " + MainYScale.invert(event.pageX, event.pageY))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px");
     };
 
-    function mouseMovePayroll(event, d) {
-      TOOLTIP.html("Payrolls")
-              .style("left", (event.pageX + 10) + "px")
-              .style("top", (event.pageY - 50) + "px");
-              console.log(d);
-    };
-
-    function mouseMoveClaims(event, d) {
-      TOOLTIP.html("Jobless Claims")
-              .style("left", (event.pageX + 10) + "px")
-              .style("top", (event.pageY - 50) + "px");
-              console.log(d);
-    };
-
-    function mouseMoveCPI(event, d) {
-      TOOLTIP.html("Consumer Price Index (CPI)")
-              .style("left", (event.pageX + 10) + "px")
-              .style("top", (event.pageY - 50) + "px");
-              console.log(d);
-    };
-
-    function mouseMovePPI(event, d) {
-      TOOLTIP.html("Producer Price Index (PPI)")
-              .style("left", (event.pageX + 10) + "px")
-              .style("top", (event.pageY - 50) + "px");
-              console.log(d);
-    };
-
-    function mouseMoveURate(event, d) {
-      TOOLTIP.html("Unemployment Rate")
-              .style("left", (event.pageX + 10) + "px")
-              .style("top", (event.pageY - 50) + "px");
-              console.log(d);
-    };
 
     function mouseOver(event, d) {
         TOOLTIP.style("opacity", 100);
@@ -186,22 +154,22 @@ function build_plots() {
 
     MAIN.selectAll(".cpiline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMoveCPI)
+        .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".ppiline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMovePPI)
+        .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".urateline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMoveURate)
+        .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
     MAIN.selectAll(".payrollline")
         .on("mouseover", mouseOver)
-        .on("mousemove", mouseMovePayroll)
+        .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
   });
 
