@@ -203,8 +203,55 @@ function build_plots() {
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMovePayroll)
         .on("mouseleave", mouseLeave);
+  });
 
+};
+
+build_plots()
+
+
+//global constant for detail vis info box
+//constants for indicator header
+const indicator_text_cpi = "CPI"
+const indicator_text_ppi = "PPI"
+const indicator_text_urate = "Unemployment Rate"
+const indicator_text_uclaims = "Unemployment Claims"
+const indicator_text_payrolls = "Payrolls"
+
+//constants for the indicator information
+const indicator_info_text_cpi = "CPI info"
+const indicator_info_text_ppi = "PPI info"
+const indicator_info_text_urate = "Unemployment Rate info"
+const indicator_info_text_uclaims = "Unemployment Claims info"
+const indicator_info_text_payrolls = "Payrolls info"
+
+function detail_vis(index) {
+  // reading in the data
+  d3.csv("data/NoNullsData.csv", 
+  function(d){
+    return { DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
+            Payrolls : +d.Payrolls,
+            CPI : +d.CPI,
+            UClaims : +d.UClaims,
+            PPI : +d.PPI,
+            URate : +d.URate}
+  }
+  ).then((data) => {
+
+    // getting max values for indicators 
+    const MaxPayroll = d3.max(data, (d) => { return d.Payrolls; });
+    const MaxCPI = d3.max(data, (d) => { return d.CPI; });
+    const MaxPPI = d3.max(data, (d) => { return d.PPI; });
+    const MaxURate = d3.max(data, (d) => { return d.URate; });
+    const MaxUClaims = d3.max(data, (d) => { return d.UClaims; });
     
+    //getting dates and date range
+    const dates = [];
+    for (let obj of data) {
+      dates.push(obj.DATE)
+    }
+    const domain = d3.extent(data, (d) => d.DATE);
+
     // constants for plot design
     const DETAIL_FRAME_HEIGHT = 225;
     const DETAIL_FRAME_WIDTH = 550; 
@@ -213,46 +260,177 @@ function build_plots() {
     const DETAIL_VIS_HEIGHT = DETAIL_FRAME_HEIGHT - DETAIL_MARGINS.top - DETAIL_MARGINS.bottom;
     const DETAIL_VIS_WIDTH = DETAIL_FRAME_WIDTH - DETAIL_MARGINS.left - DETAIL_MARGINS.right; 
 
-
-    //setting scales
+    // setting x scale and axis (used regardless of indicator)
     const DetailXScale = d3.scaleTime() 
                       .domain(domain) 
                       .range([0, DETAIL_VIS_WIDTH]); 
 
-    const DetailYScale = d3.scaleLinear() 
+    // setting constants for each indicator
+    const PayrollYScale = d3.scaleLinear() 
                       .domain([MaxPayroll, 0])  
                       .range([0, DETAIL_VIS_HEIGHT]); 
+    
+    const URateYScale = d3.scaleLinear() 
+                      .domain([MaxURate, 0])  
+                      .range([0, DETAIL_VIS_HEIGHT]); 
+                      
+    const UClaimsYScale = d3.scaleLinear() 
+                      .domain([MaxUClaims, 0])  
+                      .range([0, DETAIL_VIS_HEIGHT]); 
+    
+    const PPIYScale = d3.scaleLinear() 
+                      .domain([MaxPPI, 0])  
+                      .range([0, DETAIL_VIS_HEIGHT]); 
 
-    const DETAIL = d3.select("#detailgraph")
-                  .append("svg")
-                    .attr("id", "length")
-                    .attr("height", DETAIL_FRAME_HEIGHT)
-                    .attr("width", DETAIL_FRAME_WIDTH)
-                    .attr("class", "frame"); 
+    const CPIYScale = d3.scaleLinear() 
+                      .domain([MaxCPI, 0])  
+                      .range([0, DETAIL_VIS_HEIGHT]); 
 
-    // plot payroll counts
-    const payrolls_DETAIL = DETAIL.append('path')
-                            .datum(data) // passed from .then  
+    (d) => {
+    if (index == 0) {
+      detail_dynamic(PayrollYScale, d.Payrolls, "payrollline");
+    }
+    if (index == 1) {
+      detail_dynamic(URateYScale, d.URate, "urateline");
+    }
+    if (index == 2) {
+      detail_dynamic(CPIYScale, d.CPI, "cpiline");
+    }
+    if (index == 3) {
+      detail_dynamic(PPIYScale, d.PPI, "ppiline");
+    }
+    if (index == 4) {
+      detail_dynamic(UClaimsYScale, d.UClaims, "claimsline");
+    }
+  };
+    
+    //function to draw the correct line
+    function detail_dynamic(scale, col, line_class) {
+
+      // setting up svg to put the visual in
+      const DETAIL = d3.select("#detailgraph")
+        .append("svg")
+        .attr("id", "detail")
+        .attr("height", DETAIL_FRAME_HEIGHT)
+        .attr("width", DETAIL_FRAME_WIDTH)
+        .attr("class", "frame"); 
+
+      const DETAIL_LINE = DETAIL.append('path')
+                            .datum(data)
                             .attr("d", d3.line()
                                 .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
-                                .y((d) => {return DetailYScale(d.Payrolls) + DETAIL_MARGINS.top}))
-                            .attr("class", "payrolldetailline"); 
+                                .y((d) => {return scale(col) + DETAIL_MARGINS.top}))
+                            .attr("class", line_class); 
 
-     // Add x axis to vis  
-    DETAIL.append("g") 
-        .attr("transform", "translate(" + DETAIL_MARGINS.left + 
-              "," + (DETAIL_VIS_HEIGHT + DETAIL_MARGINS.top) + ")") 
-        .call(d3.axisBottom(DetailXScale).ticks(8)) 
-          .attr("font-size", '10px'); 
+      // Add x axis to vis  
+      DETAIL.append("g") 
+      .attr("transform", "translate(" + DETAIL_MARGINS.left + 
+        "," + (DETAIL_VIS_HEIGHT + DETAIL_MARGINS.top) + ")") 
+      .call(d3.axisBottom(DetailXScale).ticks(8)) 
+      .attr("font-size", '10px'); 
 
-    // Add y axis to vis  
-    DETAIL.append("g") 
+      // Add y axis to vis  
+      DETAIL.append("g") 
         .attr("transform", "translate(" + DETAIL_MARGINS.left + 
-              "," + (DETAIL_MARGINS.top) + ")") 
-        .call(d3.axisLeft(DetailYScale).ticks(4))
-          .attr("font-size", '10px'); 
+          "," + (DETAIL_MARGINS.top) + ")") 
+        .call(d3.axisLeft(scale).ticks(4))
+        .attr("font-size", '10px'); 
+    };
+
+    // // plot payroll counts
+    // const payrolls_DETAIL = DETAIL.append('path')
+    //                         .datum(data) // passed from .then  
+    //                         .attr("d", d3.line()
+    //                             .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+    //                             .y((d) => {return DetailYScale(d.Payrolls) + DETAIL_MARGINS.top}))
+    //                         .attr("class", "payrollline"); 
+    
+    // // plot payroll counts
+    // const urate_DETAIL = DETAIL.append('path')
+    //                         .datum(data) // passed from .then  
+    //                         .attr("d", d3.line()
+    //                             .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+    //                             .y((d) => {return DetailYScale(d.URate) + DETAIL_MARGINS.top}))
+    //                         .attr("class", "payrolldetailline"); 
+
+    // // plot payroll counts
+    // const cpi_DETAIL = DETAIL.append('path')
+    //                         .datum(data) // passed from .then  
+    //                         .attr("d", d3.line()
+    //                             .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+    //                             .y((d) => {return DetailYScale(d.CPI) + DETAIL_MARGINS.top}))
+    //                         .attr("class", "payrolldetailline"); 
+
+    // // plot payroll counts
+    // const ppi_DETAIL = DETAIL.append('path')
+    //                         .datum(data) // passed from .then  
+    //                         .attr("d", d3.line()
+    //                             .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+    //                             .y((d) => {return DetailYScale(d.PPI) + DETAIL_MARGINS.top}))
+    //                         .attr("class", "payrolldetailline"); 
+
+    // // plot payroll counts
+    // const uclaims_DETAIL = DETAIL.append('path')
+    //                         .datum(data) // passed from .then  
+    //                         .attr("d", d3.line()
+    //                             .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+    //                             .y((d) => {return DetailYScale(d.UClaims) + DETAIL_MARGINS.top}))
+    //                         .attr("class", "payrolldetailline"); 
   });
-
 };
 
-build_plots()
+// initialize deatilvis with payrolls information
+function initial_detail() {
+  document.getElementById('indicatortext').innerHTML = indicator_text_payrolls;
+  document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_payrolls;
+
+  detail_vis(0);
+};
+
+initial_detail();
+
+// getting information from the change of the dropdown
+function submitClicked() {
+  // getting selected x value from drop down
+  let indicator = document.getElementById("indicators");
+  let selected_ind = indicator.options[indicator.selectedIndex].value;
+  let selected_index = indicator.selectedIndex;
+
+  update_detail(selected_index);
+
+  detail_vis(selected_index);
+}
+
+// altering the detailtextbox
+function update_detail(x) {
+
+  // checking the given index and altering the contents of detailtextbox 
+  if (x == 1) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_urate;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_urate;
+  } 
+  
+  if (x == 2) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_cpi;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_cpi;
+  } 
+  
+  if (x == 3) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_ppi;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_ppi;
+  } 
+  
+  if (x == 4) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_uclaims;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_uclaims;
+  } 
+  
+  if (x == 0) {
+    document.getElementById('indicatortext').innerHTML = indicator_text_payrolls;
+    document.getElementById('indicatorinfotext').innerHTML = indicator_info_text_payrolls;
+  }
+
+}
+
+// Add event handler to button 
+document.getElementById('selectedindicator').addEventListener('change', submitClicked);

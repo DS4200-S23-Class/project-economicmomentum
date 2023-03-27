@@ -21,7 +21,7 @@ h2 {
 
 #mainvis {
     width: 65%;
-    padding-lft: 30px;
+    padding-left: 30px;
     object-fit: contain;
     justify-items: center;
 }
@@ -36,16 +36,6 @@ h2 {
 #indicatorselection {
     display: flex;
     flex-direction: row;
-    object-fit: contain;
-}
-
-#dropdown {
-    width: 80%;
-    object-fit: contain;
-}
-
-#subbutton {
-    width: 20%;
     object-fit: contain;
 }
 
