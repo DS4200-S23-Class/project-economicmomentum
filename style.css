@@ -16,15 +16,17 @@ h2 {
     display: flex;
     flex-direction: row;
     object-fit: contain;
-    height:450px
+    height:550px;
 }
 
-#mainvis {
+#left {
+    display: flex;
+    flex-direction: column;
     width: 65%;
-    padding-left: 30px;
     object-fit: contain;
-    justify-items: center;
 }
+
+
 
 #detailvis {
     display: flex;
@@ -33,14 +35,27 @@ h2 {
     object-fit: contain;
 }
 
-#indicatorselection {
-    display: flex;
-    flex-direction: row;
+#mainvis {
+    height: 85%;
+    object-fit: contain;
+    justify-items: center;
+}
+
+#slider {
+    background-color: cadetblue;
+    height: 15%;
     object-fit: contain;
 }
 
+
+#indicatorselection {
+    height: 5%;
+    object-fit: contain;
+    background-color: palevioletred;
+}
+
 #detailgraph {
-    height: 70%;
+    height: 65%;
     object-fit: contain;
     background-color: palegoldenrod;
 }
@@ -49,11 +64,6 @@ h2 {
     height: 30%;
     object-fit: contain;
     background-color: palevioletred;
-}
-
-#slider {
-    background-color: cadetblue;
-    height: 75px;
 }
 
 /* line styling for visuals */
