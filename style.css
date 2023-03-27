@@ -109,3 +109,12 @@ h2 {
     border-style: solid;
     border-color: black;
 }
+
+.slider {
+  width: 70%; /* Full-width */
+  height: 25px; /* Specified height */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  transition: opacity .2s;
+
+}
