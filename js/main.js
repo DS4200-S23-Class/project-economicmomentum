@@ -260,6 +260,14 @@ function build_plots() {
         
         console.log("updatemain called")
 
+        const slideMin = SlideXScale.invert(x0);
+        const slideMax = SlideXScale.invert(x1);
+
+        const domain = [slideMin, slideMax];
+
+        // pretty much recall stuff from build plot with new date range?????
+
+
         
     };
     
