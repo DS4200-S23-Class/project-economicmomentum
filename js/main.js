@@ -12,6 +12,7 @@ const SLIDE_MARGINS = {left: 50, right: 50, top: 10, bottom: 10};
 
 const SLIDE_VIS_H = SLIDE_HEIGHT - MARGINS.top - MARGINS.bottom;
 const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right; 
+
 // creation function
 function build_plots() {
 
@@ -64,7 +65,7 @@ function build_plots() {
     // setting up the graph
     const MAIN = d3.select("#mainvis")
                   .append("svg")
-                    .attr("id", "length")
+                    .attr("id", "mvis")
                     .attr("height", FRAME_HEIGHT)
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame"); 
@@ -258,23 +259,47 @@ function build_plots() {
     function updateMain(event) {
         extent = event.selection  //get coordinates
 
-        let x0 = extent[0][0],
-            x1 = extent[1][0];
-        
-        console.log("updatemain called")
+        d3.selectAll("#mainvis > *").remove(); 
 
+        renderMain(extent);
+        console.log("updatemain called");
+    }
+
+    function renderMain(brush_coords){
+        
+        let x0 = brush_coords[0][0],
+            x1 = brush_coords[1][0];
+        
+        console.log(x0);
+        console.log(x1);
+        
         //ISSUE IS HERE, date formatting and date domain formatting again I think
         const slideMin = SlideXScale.invert(x0);
         const slideMax = SlideXScale.invert(x1);
 
+        console.log(slideMin)
+        console.log(slideMax)
+
         const domain = [slideMin, slideMax];
 
-        d3.selectAll("#mainvis > *").remove(); 
-
+        console.log(domain)
+   
         //setting scales
         const MainXScale = d3.scaleTime() 
                             .domain(domain) 
                             .range([0, VIS_WIDTH]); 
+
+        const MainYScale = d3.scaleLinear() 
+                            .domain([1, 0])  
+                            .range([0, VIS_HEIGHT]); 
+      
+        // setting up the graph
+        const MAIN = d3.select("#mainvis")
+                        .append("svg")
+                          .attr("id", "mvis")
+                          .attr("height", FRAME_HEIGHT)
+                          .attr("width", FRAME_WIDTH)
+                          .attr("class", "frame"); 
 
         // plot payroll counts
         const payrolls = MAIN.append('path')
@@ -332,9 +357,6 @@ function build_plots() {
         .attr("font-size", '10px'); 
 
         // pretty much recall stuff from build plot with new date range?????
-
-
-        
     };
     
 });
