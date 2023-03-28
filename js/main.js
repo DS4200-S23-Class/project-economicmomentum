@@ -259,12 +259,11 @@ function build_plots() {
         extent = event.selection  //get coordinates
 
         let x0 = extent[0][0],
-            x1 = extent[1][0],
-            y0 = extent[0][1],
-            y1 = extent[1][1];
+            x1 = extent[1][0];
         
         console.log("updatemain called")
 
+        //ISSUE IS HERE, date formatting and date domain formatting again I think
         const slideMin = SlideXScale.invert(x0);
         const slideMax = SlideXScale.invert(x1);
 
