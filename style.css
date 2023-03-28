@@ -26,8 +26,6 @@ h2 {
     object-fit: contain;
 }
 
-
-
 #detailvis {
     display: flex;
     flex-direction: column;
@@ -42,7 +40,6 @@ h2 {
 }
 
 #slider {
-    background-color: cadetblue;
     height: 15%;
     object-fit: contain;
 }
@@ -94,9 +91,9 @@ h2 {
     fill: none;
 }
 
-.payrolldetailline {
-    stroke:orange;
-    stroke-width: 2px;
+.slideline {
+    stroke:black;
+    stroke-width: 1px;
     fill: none;
 }
 
@@ -115,13 +112,4 @@ h2 {
     border-width: 2px;
     border-style: solid;
     border-color: black;
-}
-
-.slider {
-  width: 70%; /* Full-width */
-  height: 25px; /* Specified height */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  transition: opacity .2s;
-
 }
