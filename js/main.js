@@ -361,7 +361,67 @@ function build_plots() {
         return (d * 100) + "%"}))
         .attr("font-size", '10px'); 
 
-        // pretty much recall stuff from build plot with new date range?????
+            // add a tooltip to the visualization
+    const TOOLTIP = d3.select("#mainvis")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+
+    // add a tooltip to the main viz
+    // change the date time format
+                       
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let y_value = event.pageY / VIS_HEIGHT;
+        console.log(y_value);
+        let date = dateFormat(MainXScale.invert(event.offsetX - MARGINS.right));
+        let value = Math.abs(MainYScale.invert(event.offsetY - MARGINS.top));
+
+      
+        
+
+        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+
+    MAIN.selectAll(".claimsline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".cpiline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".ppiline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".urateline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
+    MAIN.selectAll(".payrollline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
     };
     
 });
