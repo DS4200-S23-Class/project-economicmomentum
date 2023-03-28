@@ -22,7 +22,7 @@ h2 {
 #left {
     display: flex;
     flex-direction: column;
-    width: 65%;
+    width: 62%;
     object-fit: contain;
 }
 
@@ -31,7 +31,7 @@ h2 {
 #detailvis {
     display: flex;
     flex-direction: column;
-    width: 35%;
+    width: 38%;
     object-fit: contain;
 }
 
@@ -55,13 +55,13 @@ h2 {
 }
 
 #detailgraph {
-    height: 65%;
+    height: 60%;
     object-fit: contain;
     background-color: palegoldenrod;
 }
 
 #infobox {
-    height: 30%;
+    height: 40%;
     object-fit: contain;
     background-color: palevioletred;
 }
@@ -92,7 +92,7 @@ h2 {
 }
 
 .urateline {
-    stroke:orange;
+    stroke:teal;
     stroke-width: 2px;
     fill: none;
 }
