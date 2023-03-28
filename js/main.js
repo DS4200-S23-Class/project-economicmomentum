@@ -12,6 +12,7 @@ const SLIDE_MARGINS = {left: 50, right: 50, top: 10, bottom: 10};
 
 const SLIDE_VIS_H = SLIDE_HEIGHT - MARGINS.top - MARGINS.bottom;
 const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right; 
+
 // creation function
 function build_plots() {
 
@@ -64,7 +65,7 @@ function build_plots() {
     // setting up the graph
     const MAIN = d3.select("#mainvis")
                   .append("svg")
-                    .attr("id", "length")
+                    .attr("id", "mvis")
                     .attr("height", FRAME_HEIGHT)
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame"); 
@@ -260,14 +261,104 @@ function build_plots() {
     function updateMain(event) {
         extent = event.selection  //get coordinates
 
-        let x0 = extent[0][0],
-            x1 = extent[1][0],
-            y0 = extent[0][1],
-            y1 = extent[1][1];
-        
-        console.log("updatemain called")
+        d3.selectAll("#mainvis > *").remove(); 
 
+        renderMain(extent);
+        console.log("updatemain called");
+    }
+
+    function renderMain(brush_coords){
         
+        let x0 = brush_coords[0][0],
+            x1 = brush_coords[1][0];
+        
+        console.log(x0);
+        console.log(x1);
+        
+        //ISSUE IS HERE, date formatting and date domain formatting again I think
+        const slideMin = SlideXScale.invert(x0);
+        const slideMax = SlideXScale.invert(x1);
+
+        console.log(slideMin)
+        console.log(slideMax)
+
+        const domain = [slideMin, slideMax];
+
+        console.log(domain)
+   
+        //setting scales
+        const MainXScale = d3.scaleTime() 
+                            .domain(domain) 
+                            .range([0, VIS_WIDTH]); 
+
+        const MainYScale = d3.scaleLinear() 
+                            .domain([1, 0])  
+                            .range([0, VIS_HEIGHT]); 
+      
+        // setting up the graph
+        const MAIN = d3.select("#mainvis")
+                        .append("svg")
+                          .attr("id", "mvis")
+                          .attr("height", FRAME_HEIGHT)
+                          .attr("width", FRAME_WIDTH)
+                          .attr("class", "frame"); 
+
+        // plot payroll counts
+        const payrolls = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
+            .attr("class", "payrollline"); 
+
+        // plot unemployment rate
+        const unemployment = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.URate/MaxURate) + MARGINS.top}))
+            .attr("class", "urateline"); 
+
+        // plot PPI
+        const ppi = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.PPI/MaxPPI) + MARGINS.top}))
+            .attr("class", "ppiline"); 
+
+        // plot CPI
+        const cpi = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.CPI/MaxCPI) + MARGINS.top}))
+            .attr("class", "cpiline");
+
+        // plot claims
+        const claims = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
+            .attr("class", "claimsline");
+        
+        // Add x axis to vis  
+        const main_x_axis = MAIN.append("g") 
+        .attr("transform", "translate(" + MARGINS.left + 
+        "," + (VIS_HEIGHT + MARGINS.top) + ")") 
+        .call(d3.axisBottom(MainXScale).ticks(8)) 
+        .attr("font-size", '10px'); 
+
+        // Add y axis to vis  
+        const main_y_axis = MAIN.append("g") 
+        .attr("transform", "translate(" + MARGINS.left + 
+        "," + (MARGINS.top) + ")") 
+        .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
+        return (d * 100) + "%"}))
+        .attr("font-size", '10px'); 
+
+        // pretty much recall stuff from build plot with new date range?????
     };
     
 });
