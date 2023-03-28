@@ -51,19 +51,16 @@ h2 {
 #indicatorselection {
     height: 5%;
     object-fit: contain;
-    background-color: palevioletred;
 }
 
 #detailgraph {
     height: 60%;
     object-fit: contain;
-    background-color: palegoldenrod;
 }
 
 #infobox {
     height: 40%;
     object-fit: contain;
-    background-color: palevioletred;
 }
 
 /* line styling for visuals */

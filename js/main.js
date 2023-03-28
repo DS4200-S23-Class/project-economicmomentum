@@ -221,9 +221,9 @@ function detail_vis(index) {
     const domain = d3.extent(data, (d) => d.DATE);
 
     // constants for plot design
-    const DETAIL_FRAME_HEIGHT = 225;
+    const DETAIL_FRAME_HEIGHT = 275;
     const DETAIL_FRAME_WIDTH = 550; 
-    const DETAIL_MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
+    const DETAIL_MARGINS = {left: 55, right: 50, top: 25, bottom: 25};
 
     const DETAIL_VIS_HEIGHT = DETAIL_FRAME_HEIGHT - DETAIL_MARGINS.top - DETAIL_MARGINS.bottom;
     const DETAIL_VIS_WIDTH = DETAIL_FRAME_WIDTH - DETAIL_MARGINS.left - DETAIL_MARGINS.right; 
@@ -254,58 +254,102 @@ function detail_vis(index) {
                       .domain([MaxCPI, 0])  
                       .range([0, DETAIL_VIS_HEIGHT]); 
 
-    call_detail(index);
+    //adding svg
+    const DETAIL = d3.select("#detailgraph")
+                    .append("svg")
+                      .attr("id", "detail")
+                      .attr("height", DETAIL_FRAME_HEIGHT)
+                      .attr("width", DETAIL_FRAME_WIDTH)
+                      .attr("class", "frame"); 
 
-    function call_detail(d, i) {
-      if (i == 0) {
-        detail_dynamic(PayrollYScale, d.Payrolls, "payrollline");
-      }
-      if (i == 1) {
-        detail_dynamic(URateYScale, d.URate, "urateline");
-      }
-      if (i == 2) {
-        detail_dynamic(CPIYScale, d.CPI, "cpiline");
-      }
-      if (i == 3) {
-        detail_dynamic(PPIYScale, d.PPI, "ppiline");
-      }
-      if (i == 4) {
-        detail_dynamic(UClaimsYScale, d.UClaims, "claimsline");
-      }
-    };
-    
-    //function to draw the correct line
-    function detail_dynamic(scale, col, line_class) {
+    // adding x axis
+    DETAIL.append("g") 
+       .attr("transform", "translate(" + DETAIL_MARGINS.left + 
+         "," + (DETAIL_VIS_HEIGHT + DETAIL_MARGINS.top) + ")") 
+       .call(d3.axisBottom(DetailXScale).ticks(8)) 
+       .attr("font-size", '10px'); 
 
-      // setting up svg to put the visual in
-      const DETAIL = d3.select("#detailgraph")
-        .append("svg")
-        .attr("id", "detail")
-        .attr("height", DETAIL_FRAME_HEIGHT)
-        .attr("width", DETAIL_FRAME_WIDTH)
-        .attr("class", "frame"); 
-
+    // check for payroll, plot if true
+    if (index == 0) {
       const DETAIL_LINE = DETAIL.append('path')
-                            .datum(data)
-                            .attr("d", d3.line()
-                                .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
-                                .y((d) => {return scale(col) + DETAIL_MARGINS.top}))
-                            .attr("class", line_class); 
-
-      // Add x axis to vis  
-      DETAIL.append("g") 
-      .attr("transform", "translate(" + DETAIL_MARGINS.left + 
-        "," + (DETAIL_VIS_HEIGHT + DETAIL_MARGINS.top) + ")") 
-      .call(d3.axisBottom(DetailXScale).ticks(8)) 
-      .attr("font-size", '10px'); 
+                                 .datum(data)
+                                 .attr("d", d3.line()
+                                     .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+                                     .y((d) => {return PayrollYScale(d.Payrolls) + DETAIL_MARGINS.top}))
+                                 .attr("class", "payrollline"); 
 
       // Add y axis to vis  
-      DETAIL.append("g") 
-        .attr("transform", "translate(" + DETAIL_MARGINS.left + 
-          "," + (DETAIL_MARGINS.top) + ")") 
-        .call(d3.axisLeft(scale).ticks(4))
-        .attr("font-size", '10px'); 
-    };
+      const DETAIL_Y_AXIS = DETAIL.append("g") 
+                            .attr("transform", "translate(" + DETAIL_MARGINS.left + 
+                              "," + (DETAIL_MARGINS.top) + ")") 
+                            .call(d3.axisLeft(PayrollYScale).ticks(4))
+                            .attr("font-size", '10px'); 
+    }
+
+    // check for urate, plot if true
+    if (index == 1) {
+      const DETAIL_LINE = DETAIL.append('path')
+                                 .datum(data)
+                                 .attr("d", d3.line()
+                                     .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+                                     .y((d) => {return URateYScale(d.URate) + DETAIL_MARGINS.top}))
+                                 .attr("class", "urateline"); 
+
+      // Add y axis to vis  
+      const DETAIL_Y_AXIS = DETAIL.append("g") 
+                            .attr("transform", "translate(" + DETAIL_MARGINS.left + 
+                              "," + (DETAIL_MARGINS.top) + ")") 
+                            .call(d3.axisLeft(URateYScale).ticks(4))
+                            .attr("font-size", '10px'); 
+    }
+    // check for cpi, plot if true
+    if (index == 2) {
+      const DETAIL_LINE = DETAIL.append('path')
+                                 .datum(data)
+                                 .attr("d", d3.line()
+                                     .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+                                     .y((d) => {return CPIYScale(d.CPI) + DETAIL_MARGINS.top}))
+                                 .attr("class", "cpiline"); 
+
+      // Add y axis to vis  
+      const DETAIL_Y_AXIS = DETAIL.append("g") 
+                            .attr("transform", "translate(" + DETAIL_MARGINS.left + 
+                              "," + (DETAIL_MARGINS.top) + ")") 
+                            .call(d3.axisLeft(CPIYScale).ticks(4))
+                            .attr("font-size", '10px'); 
+    }
+    // check for ppi, plot if true
+    if (index == 3) {
+      const DETAIL_LINE = DETAIL.append('path')
+                                 .datum(data)
+                                 .attr("d", d3.line()
+                                     .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+                                     .y((d) => {return PPIYScale(d.PPI) + DETAIL_MARGINS.top}))
+                                 .attr("class", "ppiline"); 
+
+      // Add y axis to vis  
+      const DETAIL_Y_AXIS = DETAIL.append("g") 
+                            .attr("transform", "translate(" + DETAIL_MARGINS.left + 
+                              "," + (DETAIL_MARGINS.top) + ")") 
+                            .call(d3.axisLeft(PPIYScale).ticks(4))
+                            .attr("font-size", '10px'); 
+    }
+    // check for uclaims, plot if true
+    if (index == 4) {
+      const DETAIL_LINE = DETAIL.append('path')
+                                 .datum(data)
+                                 .attr("d", d3.line()
+                                     .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
+                                     .y((d) => {return UClaimsYScale(d.UClaims) + DETAIL_MARGINS.top}))
+                                 .attr("class", "claimsline"); 
+
+      // Add y axis to vis  
+      const DETAIL_Y_AXIS = DETAIL.append("g") 
+                            .attr("transform", "translate(" + DETAIL_MARGINS.left + 
+                              "," + (DETAIL_MARGINS.top) + ")") 
+                            .call(d3.axisLeft(UClaimsYScale).ticks(4))
+                            .attr("font-size", '10px'); 
+    }
   });
 };
 
@@ -327,6 +371,8 @@ function submitClicked() {
 
   update_detail(selected_index);
 
+  d3.selectAll("#detailgraph > *").remove(); 
+  
   detail_vis(selected_index);
 }
 
