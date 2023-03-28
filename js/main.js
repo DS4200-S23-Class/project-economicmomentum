@@ -130,7 +130,9 @@ function build_plots() {
                         .attr("class", "tooltip")
                         .style("opacity", 0);
 
-
+    // add a tooltip to the main viz
+    // change the date time format
+                       
     const dateFormat = d3.timeFormat("%-m/%-d/%Y");
                         
     function mouseMove(event, d) {

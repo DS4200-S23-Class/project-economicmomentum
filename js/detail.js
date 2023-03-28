@@ -98,7 +98,43 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return PayrollYScale(d.Payrolls) + DETAIL_MARGINS.top}))
-                                 .attr("class", "payrollline"); 
+                                 .attr("class", "payrollline");
+
+    // add a tooltip to the visualization
+    const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.pageX, event.pageY));
+        let value = Math.abs(PayrollYScale.invert(event.pageX - DETAIL_MARGINS.left, event.pageY - (DETAIL_MARGINS.top * 2)));
+      
+        console.log(d3.format(".2%")(value));
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".payrollline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+ 
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
@@ -106,7 +142,7 @@ function detail_vis(index) {
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(PayrollYScale).ticks(4))
                             .attr("font-size", '10px'); 
-    }
+    };
 
     // check for urate, plot if true
     if (index == 1) {
