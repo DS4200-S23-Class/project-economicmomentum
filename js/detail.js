@@ -110,8 +110,8 @@ function detail_vis(index) {
                         
     function mouseMove(event, d) {
         let current_class = this.classList;
-        let date = dateFormat(DetailXScale.invert(event.pageX, event.pageY));
-        let value = Math.abs(PayrollYScale.invert(event.pageX - DETAIL_MARGINS.left, event.pageY - (DETAIL_MARGINS.top * 2)));
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(PayrollYScale.invert(event.offsetY - DETAIL_MARGINS.top));
       
         console.log(d3.format(".2%")(value));
 
@@ -153,6 +153,40 @@ function detail_vis(index) {
                                      .y((d) => {return URateYScale(d.URate) + DETAIL_MARGINS.top}))
                                  .attr("class", "urateline"); 
 
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(URateYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+        console.log(d3.format(".2%")(value));
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".urateline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
                             .attr("transform", "translate(" + DETAIL_MARGINS.left + 
@@ -168,6 +202,40 @@ function detail_vis(index) {
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return CPIYScale(d.CPI) + DETAIL_MARGINS.top}))
                                  .attr("class", "cpiline"); 
+
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(CPIYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+        console.log(d3.format(".2%")(value));
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".cpiline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
@@ -185,6 +253,40 @@ function detail_vis(index) {
                                      .y((d) => {return PPIYScale(d.PPI) + DETAIL_MARGINS.top}))
                                  .attr("class", "ppiline"); 
 
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(PPIYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+        console.log(d3.format(".2%")(value));
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".ppiline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
                             .attr("transform", "translate(" + DETAIL_MARGINS.left + 
@@ -200,6 +302,40 @@ function detail_vis(index) {
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return UClaimsYScale(d.UClaims) + DETAIL_MARGINS.top}))
                                  .attr("class", "claimsline"); 
+
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(UClaimsYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+        console.log(d3.format(".2%")(value));
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".claimsline")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 

@@ -138,10 +138,13 @@ function build_plots() {
                         
     function mouseMove(event, d) {
         let current_class = this.classList;
-        let date = dateFormat(MainXScale.invert(event.pageX, event.pageY));
-        let value = Math.abs(MainYScale.invert(event.pageX - MARGINS.top, event.pageY));
+        let y_value = event.pageY / VIS_HEIGHT;
+        console.log(y_value);
+        let date = dateFormat(MainXScale.invert(event.offsetX - MARGINS.right));
+        let value = Math.abs(MainYScale.invert(event.offsetY - MARGINS.top));
+
       
-        console.log(d3.format(".2%")(value));
+        
 
         TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
                 .style("left", (event.pageX + 10) + "px")
