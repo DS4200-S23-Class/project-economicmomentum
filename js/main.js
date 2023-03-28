@@ -131,11 +131,16 @@ function build_plots() {
                         .style("opacity", 0);
 
 
-
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
     function mouseMove(event, d) {
-        let current_class = this.classList
-        console.log(current_class)
-        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date:" + MainXScale.invert(event.pageX, event.pageY) + "</br>" + "Value: " + MainYScale.invert(event.pageX, event.pageY))
+        let current_class = this.classList;
+        let date = dateFormat(MainXScale.invert(event.pageX, event.pageY));
+        let value = Math.abs(MainYScale.invert(event.pageX - MARGINS.top, event.pageY));
+      
+        console.log(d3.format(".2%")(value));
+
+        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px");
     };
