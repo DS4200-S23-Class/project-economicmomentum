@@ -270,6 +270,68 @@ function build_plots() {
 
         const domain = [slideMin, slideMax];
 
+        d3.selectAll("#mainvis > *").remove(); 
+
+        //setting scales
+        const MainXScale = d3.scaleTime() 
+                            .domain(domain) 
+                            .range([0, VIS_WIDTH]); 
+
+        // plot payroll counts
+        const payrolls = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
+            .attr("class", "payrollline"); 
+
+        // plot unemployment rate
+        const unemployment = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.URate/MaxURate) + MARGINS.top}))
+            .attr("class", "urateline"); 
+
+        // plot PPI
+        const ppi = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.PPI/MaxPPI) + MARGINS.top}))
+            .attr("class", "ppiline"); 
+
+        // plot CPI
+        const cpi = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.CPI/MaxCPI) + MARGINS.top}))
+            .attr("class", "cpiline");
+
+        // plot claims
+        const claims = MAIN.append('path')
+            .datum(data) // passed from .then  
+            .attr("d", d3.line()
+                .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
+                .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
+            .attr("class", "claimsline");
+        
+        // Add x axis to vis  
+        const main_x_axis = MAIN.append("g") 
+        .attr("transform", "translate(" + MARGINS.left + 
+        "," + (VIS_HEIGHT + MARGINS.top) + ")") 
+        .call(d3.axisBottom(MainXScale).ticks(8)) 
+        .attr("font-size", '10px'); 
+
+        // Add y axis to vis  
+        const main_y_axis = MAIN.append("g") 
+        .attr("transform", "translate(" + MARGINS.left + 
+        "," + (MARGINS.top) + ")") 
+        .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
+        return (d * 100) + "%"}))
+        .attr("font-size", '10px'); 
+
         // pretty much recall stuff from build plot with new date range?????
 
 
