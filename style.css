@@ -118,8 +118,8 @@ h2 {
 }
 
 .slider {
-  width: 70%; /* Full-width */
-  height: 25px; /* Specified height */
+  width: 100%; /* Full-width */
+  height: 70px; /* Specified height */
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   transition: opacity .2s;
