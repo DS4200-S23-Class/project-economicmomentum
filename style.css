@@ -26,8 +26,6 @@ h2 {
     object-fit: contain;
 }
 
-
-
 #detailvis {
     display: flex;
     flex-direction: column;
@@ -90,12 +88,6 @@ h2 {
 
 .urateline {
     stroke:teal;
-    stroke-width: 2px;
-    fill: none;
-}
-
-.payrolldetailline {
-    stroke:orange;
     stroke-width: 2px;
     fill: none;
 }
