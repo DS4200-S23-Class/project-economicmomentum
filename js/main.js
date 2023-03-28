@@ -272,8 +272,8 @@ function build_plots() {
 
     function renderMain(brush_coords){
         
-        let x0 = brush_coords[0][0],
-            x1 = brush_coords[1][0];
+        let x0 = brush_coords[0],
+            x1 = brush_coords[1];
         
         console.log(x0);
         console.log(x1);
