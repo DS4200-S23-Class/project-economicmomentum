@@ -40,7 +40,6 @@ h2 {
 }
 
 #slider {
-    background-color: cadetblue;
     height: 15%;
     object-fit: contain;
 }
@@ -92,6 +91,12 @@ h2 {
     fill: none;
 }
 
+.slideline {
+    stroke:black;
+    stroke-width: 1px;
+    fill: none;
+}
+
 /* tootltip styling */
 .tooltip{
   position: absolute;
@@ -107,13 +112,4 @@ h2 {
     border-width: 2px;
     border-style: solid;
     border-color: black;
-}
-
-.slider {
-  width: 100%; /* Full-width */
-  height: 70px; /* Specified height */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  transition: opacity .2s;
-
 }

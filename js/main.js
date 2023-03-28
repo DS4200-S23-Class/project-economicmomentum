@@ -6,7 +6,12 @@ const MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
 
+const SLIDE_HEIGHT = 100;
+const SLIDE_WIDTH = 900; 
+const SLIDE_MARGINS = {left: 50, right: 50, top: 10, bottom: 10};
 
+const SLIDE_VIS_H = SLIDE_HEIGHT - MARGINS.top - MARGINS.bottom;
+const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right; 
 // creation function
 function build_plots() {
 
@@ -46,6 +51,7 @@ function build_plots() {
 
     const domain = d3.extent(data, (d) => d.DATE);
 
+    console.log(domain)
     //setting scales
     const MainXScale = d3.scaleTime() 
                       .domain(domain) 
@@ -104,14 +110,14 @@ function build_plots() {
                         .attr("class", "claimsline");
                         
     // Add x axis to vis  
-    MAIN.append("g") 
+    const main_x_axis = MAIN.append("g") 
         .attr("transform", "translate(" + MARGINS.left + 
               "," + (VIS_HEIGHT + MARGINS.top) + ")") 
         .call(d3.axisBottom(MainXScale).ticks(8)) 
           .attr("font-size", '10px'); 
 
     // Add y axis to vis  
-    MAIN.append("g") 
+    const main_y_axis = MAIN.append("g") 
         .attr("transform", "translate(" + MARGINS.left + 
               "," + (MARGINS.top) + ")") 
         .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
@@ -137,13 +143,11 @@ function build_plots() {
 
     function mouseOver(event, d) {
         TOOLTIP.style("opacity", 100);
-        
     };
 
 
     function mouseLeave(event, d) {
         TOOLTIP.style("opacity", 0);
-        
     };
 
 
@@ -171,7 +175,95 @@ function build_plots() {
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
-  });
+
+    // slider plotting
+
+    // setting scales
+    const SlideXScale = d3.scaleTime() 
+                      .domain(domain) 
+                      .range([0, SLIDE_VIS_W]); 
+
+    const SlideYScale = d3.scaleLinear() 
+                      .domain([1, 0])  
+                      .range([0, SLIDE_VIS_H]); 
+
+    // setting up the graph
+    const SLIDE = d3.select("#slider")
+                  .append("svg")
+                    .attr("id", "slidegraph")
+                    .attr("height", SLIDE_HEIGHT)
+                    .attr("width", SLIDE_WIDTH)
+                    .attr("class", "frame"); 
+
+    // plot payroll counts
+    const s_payrolls = SLIDE.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
+                            .y((d) => {return SlideYScale(d.Payrolls/MaxPayroll) + SLIDE_MARGINS.top}))
+                        .attr("class", "slideline"); 
+
+    // plot unemployment rate
+    const s_unemployment = SLIDE.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
+                            .y((d) => {return SlideYScale(d.URate/MaxURate) + SLIDE_MARGINS.top}))
+                        .attr("class", "slideline"); 
+    
+    // plot PPI
+    const s_ppi = SLIDE.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
+                            .y((d) => {return SlideYScale(d.PPI/MaxPPI) + SLIDE_MARGINS.top}))
+                        .attr("class", "slideline"); 
+
+    // plot CPI
+    const s_cpi = SLIDE.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
+                            .y((d) => {return SlideYScale(d.CPI/MaxCPI) + SLIDE_MARGINS.top}))
+                        .attr("class", "slideline");
+
+     // plot claims
+     const s_claims = SLIDE.append('path')
+                        .datum(data) // passed from .then  
+                        .attr("d", d3.line()
+                            .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
+                            .y((d) => {return SlideYScale(d.UClaims/MaxUClaims) + SLIDE_MARGINS.top}))
+                        .attr("class", "slideline");
+
+    // Add x axis to vis  
+    SLIDE.append("g") 
+        .attr("transform", "translate(" + SLIDE_MARGINS.left + 
+              "," + (SLIDE_VIS_H + SLIDE_MARGINS.top) + ")") 
+        .call(d3.axisBottom(SlideXScale).ticks(8)) 
+          .attr("font-size", '10px');
+
+    // Add brushing
+    // adding brushing
+    d3.select("#slidegraph")
+          .call( d3.brushX()                    
+            .extent( [ [SLIDE_MARGINS.left,0], [(SLIDE_VIS_W + SLIDE_MARGINS.left), (SLIDE_VIS_H + SLIDE_MARGINS.top)] ] )
+            .on("start brush", updateMain)
+          );
+    
+    function updateMain(event) {
+        extent = event.selection  //get coordinates
+
+        let x0 = extent[0][0],
+            x1 = extent[1][0],
+            y0 = extent[0][1],
+            y1 = extent[1][1];
+        
+        console.log("updatemain called")
+
+        
+    };
+    
+});
 };
 
 build_plots();
