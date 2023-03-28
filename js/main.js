@@ -3,8 +3,6 @@ const FRAME_HEIGHT = 450;
 const FRAME_WIDTH = 900; 
 const MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
 
-const SLIDE_HEIGHT = 100;
-
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
 
@@ -174,7 +172,6 @@ function build_plots() {
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
   });
-
 };
 
 build_plots();
