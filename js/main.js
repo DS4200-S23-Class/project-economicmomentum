@@ -362,7 +362,13 @@ function build_plots() {
         return (d * 100) + "%"}))
         .attr("font-size", '10px'); 
       
+      
     // add a tooltip to the brushed main viz
+    const TOOLTIP = d3.select("#mainvis")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+      
     // change the date time format
                        
     const dateFormat = d3.timeFormat("%-m/%-d/%Y");
