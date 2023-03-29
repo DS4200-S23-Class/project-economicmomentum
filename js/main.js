@@ -280,8 +280,8 @@ function build_plots() {
         console.log(x1);
         
         //ISSUE IS HERE, date formatting and date domain formatting again I think
-        const slideMin = SlideXScale.invert(x0);
-        const slideMax = SlideXScale.invert(x1);
+        const slideMin = SlideXScale.invert(x0).getTime();
+        const slideMax = SlideXScale.invert(x1).getTime();
 
         console.log(slideMin)
         console.log(slideMax)
@@ -296,7 +296,7 @@ function build_plots() {
                             .range([0, VIS_WIDTH]); 
 
         const MainYScale = d3.scaleLinear() 
-                            .domain([1, 0])  
+                            .domain([0, 1])  
                             .range([0, VIS_HEIGHT]); 
       
         // setting up the graph
