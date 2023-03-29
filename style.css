@@ -65,32 +65,37 @@ h2 {
 /* line styling for visuals */
 .Payroll {
     stroke:red;
-    stroke-width: 2px;
+    stroke-width: 3px;
     fill: none;
+    opacity: 70%;
 }
 
 .CPI {
     stroke:blue;
-    stroke-width: 2px;
+    stroke-width: 3px;
     fill: none;
+    opacity: 70%;
 }
 
 .PPI {
     stroke:purple;
-    stroke-width: 2px;
+    stroke-width: 3px;
     fill: none;
+    opacity: 70%;
 }
 
 .Unemployment_Claims {
     stroke:green;
-    stroke-width: 2px;
+    stroke-width: 3px;
     fill: none;
+    opacity: 70%;
 }
 
 .Unemployment_Rate {
     stroke:teal;
-    stroke-width: 2px;
+    stroke-width: 3px;
     fill: none;
+    opacity: 70%;
 }
 
 .slideline {

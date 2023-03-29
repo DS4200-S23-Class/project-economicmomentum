@@ -43,6 +43,19 @@ function build_plots() {
     const MaxURate = d3.max(data, (d) => { return d.URate; });
     
     const MaxUClaims = d3.max(data, (d) => { return d.UClaims; });
+
+    const max_list = 
+        {"Payroll" : MaxPayroll,
+        "CPI" : MaxCPI,
+        "PPI" : MaxPPI,
+        "Unemployment_Claims" : MaxUClaims,
+        "Unemployment_Rate" : MaxURate};
+        
+
+   
+
+
+
     
 
     const dates = [];
@@ -137,24 +150,52 @@ function build_plots() {
     const dateFormat = d3.timeFormat("%-m/%-d/%Y");
                         
     function mouseMove(event, d) {
-        let current_class = this.classList;
-        let y_value = event.pageY / VIS_HEIGHT;
-        let date = dateFormat(MainXScale.invert(event.offsetX - MARGINS.right));
-        let value = Math.abs(MainYScale.invert(event.offsetY - MARGINS.top));
-        let stroke_color = d3.select(this).style("stroke");
 
-      
+
+        
+        // getting the class for the current object to be used in the tooltip
+        let current_class = this.classList;
+
+        if (current_class == "Unemployment_Rate") { 
+
+            let maximum_class = max_list[current_class];
         
 
-        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px")
-                .style("background-color", stroke_color);
+            //setting values
+            let y_value = event.pageY / VIS_HEIGHT;
+            let date = dateFormat(MainXScale.invert(event.offsetX - MARGINS.right));
+            let value = (MainYScale.invert(event.offsetY - MARGINS.top));
+            let value2 = (value * maximum_class) / 100;
+
+            let stroke_color = d3.select(this).style("stroke");
+
+            TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value2))
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 50) + "px")
+                    .style("background-color", stroke_color)
+                    .style("fill-opacity", 0.75);
+        } else {
+            let maximum_class = max_list[current_class];
+        //setting values
+            let y_value = event.pageY / VIS_HEIGHT;
+            let date = dateFormat(MainXScale.invert(event.offsetX - MARGINS.right));
+            let value = (MainYScale.invert(event.offsetY - MARGINS.top));
+            let value2 = value * maximum_class;
+            let stroke_color = d3.select(this).style("stroke");
+
+            TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value2))
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 50) + "px")
+                    .style("background-color", stroke_color);
+
+        };
+
+        
     };
 
 
     function mouseOver(event, d) {
-        TOOLTIP.style("opacity", 100);
+        TOOLTIP.style("opacity", 0.75);
     };
 
 
