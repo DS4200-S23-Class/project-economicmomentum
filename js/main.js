@@ -296,7 +296,7 @@ function build_plots() {
                             .range([0, VIS_WIDTH]); 
 
         const MainYScale = d3.scaleLinear() 
-                            .domain([0, 1])  
+                            .domain([1, 0])  
                             .range([0, VIS_HEIGHT]); 
       
         // setting up the graph
