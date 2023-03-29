@@ -280,8 +280,8 @@ function build_plots() {
         console.log(x1);
         
         //ISSUE IS HERE, date formatting and date domain formatting again I think
-        const slideMin = SlideXScale.invert(x0).getTime();
-        const slideMax = SlideXScale.invert(x1).getTime();
+        const slideMin = SlideXScale.invert(x0 - SLIDE_MARGINS.left).getTime();
+        const slideMax = SlideXScale.invert(x1  - SLIDE_MARGINS.left).getTime();
 
         console.log(slideMin)
         console.log(slideMax)
