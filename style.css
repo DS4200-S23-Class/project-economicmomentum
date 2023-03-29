@@ -64,38 +64,38 @@ h2 {
 
 /* line styling for visuals */
 .Payroll {
-    stroke:red;
+    stroke: lightsalmon;
     stroke-width: 3px;
     fill: none;
-    opacity: 70%;
+    opacity: 100%;
 }
 
 .CPI {
-    stroke:blue;
+    stroke: lightsteelblue;
     stroke-width: 3px;
     fill: none;
-    opacity: 70%;
+    opacity: 100%;
 }
 
 .PPI {
-    stroke:purple;
+    stroke: aquamarine;
     stroke-width: 3px;
     fill: none;
-    opacity: 70%;
+    opacity: 100%;
 }
 
 .Unemployment_Claims {
-    stroke:green;
+    stroke: palegreen;
     stroke-width: 3px;
     fill: none;
-    opacity: 70%;
+    opacity: 100%;
 }
 
 .Unemployment_Rate {
-    stroke:teal;
+    stroke: thistle;
     stroke-width: 3px;
     fill: none;
-    opacity: 70%;
+    opacity: 100%;
 }
 
 .slideline {

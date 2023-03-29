@@ -172,8 +172,8 @@ function build_plots() {
             TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value2))
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 50) + "px")
-                    .style("background-color", stroke_color)
-                    .style("fill-opacity", 0.75);
+                    .style("background-color", stroke_color);
+                 
         } else {
             let maximum_class = max_list[current_class];
         //setting values
@@ -195,7 +195,7 @@ function build_plots() {
 
 
     function mouseOver(event, d) {
-        TOOLTIP.style("opacity", 0.75);
+        TOOLTIP.style("opacity", 1);
     };
 
 
