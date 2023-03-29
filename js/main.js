@@ -321,8 +321,8 @@ function build_plots() {
         console.log(x1);
         
         //ISSUE IS HERE, date formatting and date domain formatting again I think
-        const slideMin = SlideXScale.invert(x0).getTime();
-        const slideMax = SlideXScale.invert(x1).getTime();
+        const slideMin = SlideXScale.invert(x0 - SLIDE_MARGINS.left).getTime();
+        const slideMax = SlideXScale.invert(x1  - SLIDE_MARGINS.left).getTime();
 
         console.log(slideMin)
         console.log(slideMax)
@@ -337,7 +337,7 @@ function build_plots() {
                             .range([0, VIS_WIDTH]); 
 
         const MainYScale = d3.scaleLinear() 
-                            .domain([0, 1])  
+                            .domain([1, 0])  
                             .range([0, VIS_HEIGHT]); 
       
         // setting up the graph
@@ -403,7 +403,13 @@ function build_plots() {
         return (d * 100) + "%"}))
         .attr("font-size", '10px'); 
       
+      
     // add a tooltip to the brushed main viz
+    const TOOLTIP = d3.select("#mainvis")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+      
     // change the date time format
                        
     const dateFormat = d3.timeFormat("%-m/%-d/%Y");
