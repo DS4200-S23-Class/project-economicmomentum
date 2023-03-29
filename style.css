@@ -11,6 +11,8 @@ h2 {
     text-align: center;
 }
 
+
+
 /* making flexboxes */
 #topvis {
     display: flex;
@@ -61,31 +63,31 @@ h2 {
 }
 
 /* line styling for visuals */
-.payrollline {
+.Payroll {
     stroke:red;
     stroke-width: 2px;
     fill: none;
 }
 
-.cpiline {
+.CPI {
     stroke:blue;
     stroke-width: 2px;
     fill: none;
 }
 
-.ppiline {
+.PPI {
     stroke:purple;
     stroke-width: 2px;
     fill: none;
 }
 
-.claimsline {
+.Unemployment_Claims {
     stroke:green;
     stroke-width: 2px;
     fill: none;
 }
 
-.urateline {
+.Unemployment_Rate {
     stroke:teal;
     stroke-width: 2px;
     fill: none;
@@ -100,9 +102,11 @@ h2 {
 /* tootltip styling */
 .tooltip{
   position: absolute;
-  background-color: silver;
   border:  solid;
-  border-width: 2px;
+  border-color: black;
+  color: white;
+  border-width: 3px;
+  font-weight: bold;
   border-radius: 5px;
   padding: 5px;
 }

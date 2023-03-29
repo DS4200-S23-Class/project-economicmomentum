@@ -76,7 +76,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                             .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
-                        .attr("class", "payrollline"); 
+                        .attr("class", "Payroll"); 
 
     // plot unemployment rate
     const unemployment = MAIN.append('path')
@@ -84,7 +84,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                             .y((d) => {return MainYScale(d.URate/MaxURate) + MARGINS.top}))
-                        .attr("class", "urateline"); 
+                        .attr("class", "Unemployment_Rate"); 
     
     // plot PPI
     const ppi = MAIN.append('path')
@@ -92,7 +92,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                             .y((d) => {return MainYScale(d.PPI/MaxPPI) + MARGINS.top}))
-                        .attr("class", "ppiline"); 
+                        .attr("class", "PPI"); 
 
     // plot CPI
     const cpi = MAIN.append('path')
@@ -100,7 +100,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                             .y((d) => {return MainYScale(d.CPI/MaxCPI) + MARGINS.top}))
-                        .attr("class", "cpiline");
+                        .attr("class", "CPI");
 
      // plot claims
      const claims = MAIN.append('path')
@@ -108,7 +108,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                             .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
-                        .attr("class", "claimsline");
+                        .attr("class", "Unemployment_Claims");
                         
     // Add x axis to vis  
     const main_x_axis = MAIN.append("g") 
@@ -139,16 +139,17 @@ function build_plots() {
     function mouseMove(event, d) {
         let current_class = this.classList;
         let y_value = event.pageY / VIS_HEIGHT;
-        console.log(y_value);
         let date = dateFormat(MainXScale.invert(event.offsetX - MARGINS.right));
         let value = Math.abs(MainYScale.invert(event.offsetY - MARGINS.top));
+        let stroke_color = d3.select(this).style("stroke");
 
       
         
 
         TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
                 .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px");
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", stroke_color);
     };
 
 
@@ -162,27 +163,27 @@ function build_plots() {
     };
 
 
-    MAIN.selectAll(".claimsline")
+    MAIN.selectAll(".Unemployment_Claims")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
-    MAIN.selectAll(".cpiline")
+    MAIN.selectAll(".CPI")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
-    MAIN.selectAll(".ppiline")
+    MAIN.selectAll(".PPI")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
-    MAIN.selectAll(".urateline")
+    MAIN.selectAll(".Unemployment_Rate")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
-    MAIN.selectAll(".payrollline")
+    MAIN.selectAll(".Payroll")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
@@ -312,7 +313,7 @@ function build_plots() {
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
-            .attr("class", "payrollline"); 
+            .attr("class", "Payroll"); 
 
         // plot unemployment rate
         const unemployment = MAIN.append('path')
@@ -320,7 +321,7 @@ function build_plots() {
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.URate/MaxURate) + MARGINS.top}))
-            .attr("class", "urateline"); 
+            .attr("class", "Unemployment_Rate"); 
 
         // plot PPI
         const ppi = MAIN.append('path')
@@ -328,7 +329,7 @@ function build_plots() {
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.PPI/MaxPPI) + MARGINS.top}))
-            .attr("class", "ppiline"); 
+            .attr("class", "PPI"); 
 
         // plot CPI
         const cpi = MAIN.append('path')
@@ -336,7 +337,7 @@ function build_plots() {
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.CPI/MaxCPI) + MARGINS.top}))
-            .attr("class", "cpiline");
+            .attr("class", "CPI");
 
         // plot claims
         const claims = MAIN.append('path')
@@ -344,7 +345,7 @@ function build_plots() {
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
-            .attr("class", "claimsline");
+            .attr("class", "Unemployment_Claims");
         
         // Add x axis to vis  
         const main_x_axis = MAIN.append("g") 
@@ -361,67 +362,7 @@ function build_plots() {
         return (d * 100) + "%"}))
         .attr("font-size", '10px'); 
 
-            // add a tooltip to the visualization
-    const TOOLTIP = d3.select("#mainvis")
-                        .append("div")
-                        .attr("class", "tooltip")
-                        .style("opacity", 0);
 
-    // add a tooltip to the main viz
-    // change the date time format
-                       
-    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
-                        
-    function mouseMove(event, d) {
-        let current_class = this.classList;
-        let y_value = event.pageY / VIS_HEIGHT;
-        console.log(y_value);
-        let date = dateFormat(MainXScale.invert(event.offsetX - MARGINS.right));
-        let value = Math.abs(MainYScale.invert(event.offsetY - MARGINS.top));
-
-      
-        
-
-        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px");
-    };
-
-
-    function mouseOver(event, d) {
-        TOOLTIP.style("opacity", 100);
-    };
-
-
-    function mouseLeave(event, d) {
-        TOOLTIP.style("opacity", 0);
-    };
-
-
-    MAIN.selectAll(".claimsline")
-        .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
-        .on("mouseleave", mouseLeave);
-
-    MAIN.selectAll(".cpiline")
-        .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
-        .on("mouseleave", mouseLeave);
-
-    MAIN.selectAll(".ppiline")
-        .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
-        .on("mouseleave", mouseLeave);
-
-    MAIN.selectAll(".urateline")
-        .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
-        .on("mouseleave", mouseLeave);
-
-    MAIN.selectAll(".payrollline")
-        .on("mouseover", mouseOver)
-        .on("mousemove", mouseMove)
-        .on("mouseleave", mouseLeave);
     };
     
 });

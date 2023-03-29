@@ -98,7 +98,7 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return PayrollYScale(d.Payrolls) + DETAIL_MARGINS.top}))
-                                 .attr("class", "payrollline");
+                                 .attr("class", "Payroll");
 
     // add a tooltip to the visualization
     const TOOLTIP = d3.select("#detailgraph")
@@ -117,7 +117,8 @@ function detail_vis(index) {
 
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px");
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "red");
     };
 
 
@@ -130,7 +131,7 @@ function detail_vis(index) {
         TOOLTIP.style("opacity", 0);
     };
 
-    DETAIL.selectAll(".payrollline")
+    DETAIL.selectAll(".Payroll")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
@@ -151,7 +152,7 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return URateYScale(d.URate) + DETAIL_MARGINS.top}))
-                                 .attr("class", "urateline"); 
+                                 .attr("class", "Unemployment_Rate"); 
 
       const TOOLTIP = d3.select("#detailgraph")
                         .append("div")
@@ -165,11 +166,10 @@ function detail_vis(index) {
         let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
         let value = Math.abs(URateYScale.invert(event.offsetY - DETAIL_MARGINS.top));
       
-        console.log(d3.format(".2%")(value));
-
-        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format("0.2%")(value / 100))
                 .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px");
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "teal");
     };
 
 
@@ -182,7 +182,7 @@ function detail_vis(index) {
         TOOLTIP.style("opacity", 0);
     };
 
-    DETAIL.selectAll(".urateline")
+    DETAIL.selectAll(".Unemployment_Rate")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
@@ -201,7 +201,7 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return CPIYScale(d.CPI) + DETAIL_MARGINS.top}))
-                                 .attr("class", "cpiline"); 
+                                 .attr("class", "CPI"); 
 
       const TOOLTIP = d3.select("#detailgraph")
                         .append("div")
@@ -214,12 +214,11 @@ function detail_vis(index) {
         let current_class = this.classList;
         let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
         let value = Math.abs(CPIYScale.invert(event.offsetY - DETAIL_MARGINS.top));
-      
-        console.log(d3.format(".2%")(value));
 
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px");
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "blue");
     };
 
 
@@ -232,7 +231,7 @@ function detail_vis(index) {
         TOOLTIP.style("opacity", 0);
     };
 
-    DETAIL.selectAll(".cpiline")
+    DETAIL.selectAll(".CPI")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
@@ -251,7 +250,7 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return PPIYScale(d.PPI) + DETAIL_MARGINS.top}))
-                                 .attr("class", "ppiline"); 
+                                 .attr("class", "PPI"); 
 
       const TOOLTIP = d3.select("#detailgraph")
                         .append("div")
@@ -265,11 +264,11 @@ function detail_vis(index) {
         let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
         let value = Math.abs(PPIYScale.invert(event.offsetY - DETAIL_MARGINS.top));
       
-        console.log(d3.format(".2%")(value));
 
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px");
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "purple");
     };
 
 
@@ -282,7 +281,7 @@ function detail_vis(index) {
         TOOLTIP.style("opacity", 0);
     };
 
-    DETAIL.selectAll(".ppiline")
+    DETAIL.selectAll(".PPI")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
@@ -301,7 +300,7 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return UClaimsYScale(d.UClaims) + DETAIL_MARGINS.top}))
-                                 .attr("class", "claimsline"); 
+                                 .attr("class", "Unemployment_Claims"); 
 
       const TOOLTIP = d3.select("#detailgraph")
                         .append("div")
@@ -315,11 +314,11 @@ function detail_vis(index) {
         let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
         let value = Math.abs(UClaimsYScale.invert(event.offsetY - DETAIL_MARGINS.top));
       
-        console.log(d3.format(".2%")(value));
 
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 50) + "px");
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "green");
     };
 
 
@@ -332,7 +331,7 @@ function detail_vis(index) {
         TOOLTIP.style("opacity", 0);
     };
 
-    DETAIL.selectAll(".claimsline")
+    DETAIL.selectAll(".Unemployment_Claims")
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
