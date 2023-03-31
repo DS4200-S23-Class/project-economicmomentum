@@ -11,6 +11,8 @@ h2 {
     text-align: center;
 }
 
+
+
 /* making flexboxes */
 #topvis {
     display: flex;
@@ -40,7 +42,6 @@ h2 {
 }
 
 #slider {
-    background-color: cadetblue;
     height: 15%;
     object-fit: contain;
 }
@@ -62,42 +63,55 @@ h2 {
 }
 
 /* line styling for visuals */
-.payrollline {
-    stroke:red;
-    stroke-width: 2px;
+.Payroll {
+    stroke: lightsalmon;
+    stroke-width: 3px;
     fill: none;
+    opacity: 100%;
 }
 
-.cpiline {
-    stroke:blue;
-    stroke-width: 2px;
+.CPI {
+    stroke: lightsteelblue;
+    stroke-width: 3px;
     fill: none;
+    opacity: 100%;
 }
 
-.ppiline {
-    stroke:purple;
-    stroke-width: 2px;
+.PPI {
+    stroke: aquamarine;
+    stroke-width: 3px;
     fill: none;
+    opacity: 100%;
 }
 
-.claimsline {
-    stroke:green;
-    stroke-width: 2px;
+.Unemployment_Claims {
+    stroke: palegreen;
+    stroke-width: 3px;
     fill: none;
+    opacity: 100%;
 }
 
-.urateline {
-    stroke:teal;
-    stroke-width: 2px;
+.Unemployment_Rate {
+    stroke: thistle;
+    stroke-width: 3px;
+    fill: none;
+    opacity: 100%;
+}
+
+.slideline {
+    stroke:black;
+    stroke-width: 1px;
     fill: none;
 }
 
 /* tootltip styling */
 .tooltip{
   position: absolute;
-  background-color: silver;
   border:  solid;
-  border-width: 2px;
+  border-color: black;
+  color: white;
+  border-width: 3px;
+  font-weight: bold;
   border-radius: 5px;
   padding: 5px;
 }
@@ -107,13 +121,4 @@ h2 {
     border-width: 2px;
     border-style: solid;
     border-color: black;
-}
-
-.slider {
-  width: 100%; /* Full-width */
-  height: 70px; /* Specified height */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  transition: opacity .2s;
-
 }

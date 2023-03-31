@@ -98,7 +98,44 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return PayrollYScale(d.Payrolls) + DETAIL_MARGINS.top}))
-                                 .attr("class", "payrollline"); 
+                                 .attr("class", "Payroll");
+
+    // add a tooltip to the visualization
+    const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(PayrollYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+        console.log(d3.format(".2%")(value));
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "red");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".Payroll")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
+ 
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
@@ -106,7 +143,7 @@ function detail_vis(index) {
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(PayrollYScale).ticks(4))
                             .attr("font-size", '10px'); 
-    }
+    };
 
     // check for urate, plot if true
     if (index == 1) {
@@ -115,7 +152,40 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return URateYScale(d.URate) + DETAIL_MARGINS.top}))
-                                 .attr("class", "urateline"); 
+                                 .attr("class", "Unemployment_Rate"); 
+
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(URateYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format("0.2%")(value / 100))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "teal");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".Unemployment_Rate")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
@@ -131,7 +201,40 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return CPIYScale(d.CPI) + DETAIL_MARGINS.top}))
-                                 .attr("class", "cpiline"); 
+                                 .attr("class", "CPI"); 
+
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(CPIYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "blue");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".CPI")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
@@ -147,7 +250,41 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return PPIYScale(d.PPI) + DETAIL_MARGINS.top}))
-                                 .attr("class", "ppiline"); 
+                                 .attr("class", "PPI"); 
+
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(PPIYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "purple");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".PPI")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
@@ -163,7 +300,41 @@ function detail_vis(index) {
                                  .attr("d", d3.line()
                                      .x((d) => {return DETAIL_MARGINS.left + DetailXScale(d.DATE)})
                                      .y((d) => {return UClaimsYScale(d.UClaims) + DETAIL_MARGINS.top}))
-                                 .attr("class", "claimsline"); 
+                                 .attr("class", "Unemployment_Claims"); 
+
+      const TOOLTIP = d3.select("#detailgraph")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);                           
+
+    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+                        
+    function mouseMove(event, d) {
+        let current_class = this.classList;
+        let date = dateFormat(DetailXScale.invert(event.offsetX - DETAIL_MARGINS.left));
+        let value = Math.abs(UClaimsYScale.invert(event.offsetY - DETAIL_MARGINS.top));
+      
+
+        TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", "green");
+    };
+
+
+    function mouseOver(event, d) {
+        TOOLTIP.style("opacity", 100);
+    };
+
+
+    function mouseLeave(event, d) {
+        TOOLTIP.style("opacity", 0);
+    };
+
+    DETAIL.selectAll(".Unemployment_Claims")
+        .on("mouseover", mouseOver)
+        .on("mousemove", mouseMove)
+        .on("mouseleave", mouseLeave);
 
       // Add y axis to vis  
       const DETAIL_Y_AXIS = DETAIL.append("g") 
