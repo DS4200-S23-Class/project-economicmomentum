@@ -118,7 +118,7 @@ function detail_vis(index) {
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px")
-                .style("background-color", "red");
+                .style("background-color", "gray");
     };
 
 
@@ -169,7 +169,7 @@ function detail_vis(index) {
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format("0.2%")(value / 100))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px")
-                .style("background-color", "teal");
+                .style("background-color", "gray");
     };
 
 
@@ -218,7 +218,7 @@ function detail_vis(index) {
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px")
-                .style("background-color", "blue");
+                .style("background-color", "gray");
     };
 
 
@@ -268,7 +268,7 @@ function detail_vis(index) {
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px")
-                .style("background-color", "purple");
+                .style("background-color", "gray");
     };
 
 
@@ -318,7 +318,7 @@ function detail_vis(index) {
         TOOLTIP.html("Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px")
-                .style("background-color", "green");
+                .style("background-color", "gray");
     };
 
 
