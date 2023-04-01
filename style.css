@@ -122,8 +122,14 @@ h2 {
 }
 
 /* info box styling */
-#detailtextbox {
+.fulloutline {
     border-width: 2px;
     border-style: solid;
     border-color: black;
+}
+
+.topoutline {
+    border-top: 2px;
+    border-top-color: black;
+    border-top-style: solid;
 }
