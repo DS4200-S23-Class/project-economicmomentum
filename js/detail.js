@@ -43,7 +43,7 @@ function detail_vis(index) {
     const domain = d3.extent(data, (d) => d.DATE);
 
     // constants for plot design
-    const DETAIL_FRAME_HEIGHT = 325;
+    const DETAIL_FRAME_HEIGHT = 375;
     const DETAIL_FRAME_WIDTH = 550; 
     const DETAIL_MARGINS = {left: 55, right: 50, top: 25, bottom: 25};
 
