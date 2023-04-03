@@ -50,7 +50,18 @@ function build_plots() {
         "PPI" : MaxPPI,
         "Unemployment_Claims" : MaxUClaims,
         "Unemployment_Rate" : MaxURate};
+
         
+
+
+   
+    const vis1_keys = ['CPI', 'PPI', "Unemployment Rate", "Unemployment Claims", "Payrolls"];
+    const key_colors = ["rgb(27, 139, 27)", "rgba(211, 23, 23, 0.824)", "rgb(237, 138, 0)", "Purple", "rgb(49, 49, 183)"];
+    const spacing = [10, 60, 110, 250, 400];
+
+
+    
+
     const dates = [];
     for (let obj of data) {
       dates.push(obj.DATE)
@@ -130,6 +141,30 @@ function build_plots() {
         .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
             return (d * 100) + "%"}))
           .attr("font-size", '10px'); 
+
+    // dot for legend
+    MAIN.selectAll("mydots")
+        .data(vis1_keys)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d,i){ return MARGINS.left + spacing[i]})
+        .attr("cy", MARGINS.top) 
+        .attr("r", 4)
+        .style("fill", function(d,i){ return key_colors[i]});
+
+    // text for legend
+    MAIN.selectAll("mylabels")
+        .data(vis1_keys)
+        .enter()
+        .append("text")
+        .attr("x", function(d,i){ return MARGINS.left + spacing[i] + 10})
+        .attr("y", MARGINS.top)
+        .style("fill", function(d,i){ return key_colors[i]})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("alignment-baseline", "middle")
+        .style("font-size","12px");
 
     // add a tooltip to the visualization
     const TOOLTIP = d3.select("#mainvis")
@@ -394,7 +429,8 @@ function build_plots() {
         .attr("transform", "translate(" + MARGINS.left + 
         "," + (VIS_HEIGHT + MARGINS.top) + ")") 
         .call(d3.axisBottom(MainXScale).ticks(8)) 
-        .attr("font-size", '10px'); 
+        .attr("font-size", '10px')
+        .style("font-weight", "bold"); 
 
         // Add y axis to vis  
         const main_y_axis = MAIN.append("g") 
@@ -403,7 +439,30 @@ function build_plots() {
         .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
         return (d * 100) + "%"}))
         .attr("font-size", '10px'); 
-      
+    
+
+      MAIN.selectAll("mydots")
+        .data(vis1_keys)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d,i){ return MARGINS.left + spacing[i]})
+        .attr("cy", MARGINS.top) 
+        .attr("r", 4)
+        .style("fill", function(d,i){ return key_colors[i]});
+
+    // text for legend
+    MAIN.selectAll("mylabels")
+        .data(vis1_keys)
+        .enter()
+        .append("text")
+        .attr("x", function(d,i){ return MARGINS.left + spacing[i] + 10})
+        .attr("y", MARGINS.top)
+        .style("fill", function(d,i){ return key_colors[i]})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("alignment-baseline", "middle")
+        .style("font-size","12px");
       
     // add a tooltip to the brushed main viz
     const TOOLTIP = d3.select("#mainvis")
