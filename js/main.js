@@ -87,6 +87,20 @@ function build_plots() {
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame"); 
 
+    const formatDate = d3.timeParse("%-m/%-d/%Y");
+
+    function draw_recession(start, end) {
+        const recession_bar = MAIN.append("rect")
+            .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
+            .attr("y", MARGINS.top)
+            .attr("height", VIS_HEIGHT)
+            .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
+            .attr("class", 'recession_bar');
+    }
+                
+    // add 2008 recession
+    const _2008_bar = draw_recession("1/1/2008", "12/31/2008");
+    
     // plot payroll counts
     const payrolls = MAIN.append('path')
                         .datum(data) // passed from .then  

@@ -156,6 +156,11 @@ h2 {
     fill: none;
 }
 
+.recession_bar {
+    fill: pink;
+    fill-opacity: 50%;
+}
+
 /* tootltip styling */
 .tooltip{
   position: absolute;
