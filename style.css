@@ -63,6 +63,10 @@ h2 {
     overflow: auto;
 }
 
+#legend_label {
+    font-weight: bold;
+}
+
 /* line styling for visuals */
 .Payroll {
     /*stroke: lightsalmon;*/
