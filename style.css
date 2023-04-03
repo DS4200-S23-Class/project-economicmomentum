@@ -60,6 +60,7 @@ h2 {
 #infobox {
     height: 40%;
     object-fit: contain;
+    overflow: auto;
 }
 
 /* line styling for visuals */
