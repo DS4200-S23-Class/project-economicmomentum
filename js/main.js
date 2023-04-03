@@ -1,14 +1,14 @@
 // constants for plot design
 const FRAME_HEIGHT = 450;
-const FRAME_WIDTH = 900; 
-const MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
+const FRAME_WIDTH = 850; 
+const MARGINS = {left: 50, right: 10, top: 25, bottom: 25};
 
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
 
 const SLIDE_HEIGHT = 100;
-const SLIDE_WIDTH = 900; 
-const SLIDE_MARGINS = {left: 50, right: 50, top: 10, bottom: 10};
+const SLIDE_WIDTH = 850; 
+const SLIDE_MARGINS = {left: 50, right: 10, top: 10, bottom: 10};
 
 const SLIDE_VIS_H = SLIDE_HEIGHT - MARGINS.top - MARGINS.bottom;
 const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right; 
