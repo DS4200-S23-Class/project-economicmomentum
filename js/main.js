@@ -87,9 +87,10 @@ function build_plots() {
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame"); 
 
-    const formatDate = d3.timeParse("%-m/%-d/%Y");
 
     function draw_recession(start, end) {
+        const formatDate = d3.timeParse("%-m/%-d/%Y");
+
         const recession_bar = MAIN.append("rect")
             .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
             .attr("y", MARGINS.top)
