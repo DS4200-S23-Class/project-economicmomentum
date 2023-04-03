@@ -51,13 +51,6 @@ function build_plots() {
         "Unemployment_Claims" : MaxUClaims,
         "Unemployment_Rate" : MaxURate};
         
-
-   
-
-
-
-    
-
     const dates = [];
     for (let obj of data) {
       dates.push(obj.DATE)
