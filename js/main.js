@@ -247,7 +247,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.Payrolls/MaxPayroll) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline"); 
+                        .attr("class", "slidepayroll"); 
 
     // plot unemployment rate
     const s_unemployment = SLIDE.append('path')
@@ -255,7 +255,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.URate/MaxURate) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline"); 
+                        .attr("class", "slideurate"); 
     
     // plot PPI
     const s_ppi = SLIDE.append('path')
@@ -263,7 +263,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.PPI/MaxPPI) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline"); 
+                        .attr("class", "slideppi"); 
 
     // plot CPI
     const s_cpi = SLIDE.append('path')
@@ -271,7 +271,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.CPI/MaxCPI) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline");
+                        .attr("class", "slidecpi");
 
      // plot claims
      const s_claims = SLIDE.append('path')

@@ -108,6 +108,41 @@ h2 {
     opacity: 100%;
 }
 
+.slidepayroll {
+    stroke: rgb(49, 49, 183);
+    stroke-width: 1px;
+    fill: none;
+    opacity: 100%;
+}
+
+.slidecpi {
+    stroke: rgb(27, 139, 27);
+    stroke-width: 1px;
+    fill: none;
+    opacity: 100%;
+}
+
+.slideppi {
+    stroke: rgba(211, 23, 23, 0.824);
+    stroke-width: 1px;
+    fill: none;
+    opacity: 100%;
+}
+
+.slideclaims {
+    stroke: purple;
+    stroke-width: 1px;
+    fill: none;
+    opacity: 100%;
+}
+
+.slideurate {
+    stroke: rgb(237, 138, 0);
+    stroke-width: 1px;
+    fill: none;
+    opacity: 100%;
+}
+
 .slideline {
     stroke:black;
     stroke-width: 1px;
