@@ -19,7 +19,7 @@ function build_plots() {
   // reading in the data
   d3.csv("data/NoNullsData.csv", 
   function(d){
-    return { DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
+    return {DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,
             CPI : +d.CPI,
             UClaims : +d.UClaims,
@@ -306,7 +306,8 @@ function build_plots() {
     }
 
     function renderMain(brush_coords){
-        
+
+
         let x0 = brush_coords[0],
             x1 = brush_coords[1];
         
@@ -319,6 +320,10 @@ function build_plots() {
 
         console.log(slideMin)
         console.log(slideMax)
+
+        // Create new data with the selection?
+        const dataFilter = data.filter(function(row){
+            return row['DATE'] >= slideMin});
 
         const domain = [slideMin, slideMax];
 
@@ -343,7 +348,7 @@ function build_plots() {
 
         // plot payroll counts
         const payrolls = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
@@ -351,7 +356,7 @@ function build_plots() {
 
         // plot unemployment rate
         const unemployment = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.URate/MaxURate) + MARGINS.top}))
@@ -359,7 +364,7 @@ function build_plots() {
 
         // plot PPI
         const ppi = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.PPI/MaxPPI) + MARGINS.top}))
@@ -367,7 +372,7 @@ function build_plots() {
 
         // plot CPI
         const cpi = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.CPI/MaxCPI) + MARGINS.top}))
@@ -375,7 +380,7 @@ function build_plots() {
 
         // plot claims
         const claims = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
