@@ -21,6 +21,10 @@ h2 {
     height:550px;
 }
 
+.background {
+    background-color: rgb(237, 236, 236);
+}
+
 #left {
     display: flex;
     flex-direction: column;
