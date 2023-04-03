@@ -99,9 +99,16 @@ function build_plots() {
             .attr("class", 'recession_bar');
     }
                 
+    // add 2001 recession
+    const _2001_bar = draw_recession("1/1/2001", "12/31/2001");
+    
     // add 2008 recession
     const _2008_bar = draw_recession("1/1/2008", "12/31/2008");
     
+    // add covid 2020 recession
+    const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
+    
+
     // plot payroll counts
     const payrolls = MAIN.append('path')
                         .datum(data) // passed from .then  
