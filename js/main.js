@@ -1,14 +1,14 @@
 // constants for plot design
-const FRAME_HEIGHT = 450;
-const FRAME_WIDTH = 850; 
-const MARGINS = {left: 50, right: 10, top: 25, bottom: 25};
+const FRAME_HEIGHT = 510;
+const FRAME_WIDTH = 900; 
+const MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
 
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
 
-const SLIDE_HEIGHT = 100;
-const SLIDE_WIDTH = 850; 
-const SLIDE_MARGINS = {left: 50, right: 10, top: 10, bottom: 10};
+const SLIDE_HEIGHT = 115;
+const SLIDE_WIDTH = 900; 
+const SLIDE_MARGINS = {left: 50, right: 50, top: 10, bottom: 20};
 
 const SLIDE_VIS_H = SLIDE_HEIGHT - MARGINS.top - MARGINS.bottom;
 const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right; 
@@ -19,7 +19,7 @@ function build_plots() {
   // reading in the data
   d3.csv("data/NoNullsData.csv", 
   function(d){
-    return { DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
+    return {DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,
             CPI : +d.CPI,
             UClaims : +d.UClaims,
@@ -52,6 +52,7 @@ function build_plots() {
         "Unemployment_Rate" : MaxURate};
 
         
+<<<<<<< HEAD
 
    
     const vis1_keys = ['CPI', 'PPI', "Unemployment Rate", "Unemployment Claims", "Payrolls"];
@@ -340,7 +341,8 @@ function build_plots() {
     }
 
     function renderMain(brush_coords){
-        
+
+
         let x0 = brush_coords[0],
             x1 = brush_coords[1];
         
@@ -353,6 +355,13 @@ function build_plots() {
 
         console.log(slideMin)
         console.log(slideMax)
+
+        // Create new data with the selection?
+        let dataFilter1 = data.filter(function(row){
+            return row['DATE'] >= slideMin});
+
+        let dataFilter = dataFilter1.filter(function(row){
+            return row['DATE'] <= slideMax});
 
         const domain = [slideMin, slideMax];
 
@@ -377,7 +386,7 @@ function build_plots() {
 
         // plot payroll counts
         const payrolls = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.Payrolls/MaxPayroll) + MARGINS.top}))
@@ -385,7 +394,7 @@ function build_plots() {
 
         // plot unemployment rate
         const unemployment = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.URate/MaxURate) + MARGINS.top}))
@@ -393,7 +402,7 @@ function build_plots() {
 
         // plot PPI
         const ppi = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.PPI/MaxPPI) + MARGINS.top}))
@@ -401,7 +410,7 @@ function build_plots() {
 
         // plot CPI
         const cpi = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.CPI/MaxCPI) + MARGINS.top}))
@@ -409,7 +418,7 @@ function build_plots() {
 
         // plot claims
         const claims = MAIN.append('path')
-            .datum(data) // passed from .then  
+            .datum(dataFilter) // passed from .then  
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
