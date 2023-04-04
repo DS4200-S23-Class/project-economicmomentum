@@ -132,7 +132,8 @@ function build_plots() {
         .attr("transform", "translate(" + MARGINS.left + 
               "," + (VIS_HEIGHT + MARGINS.top) + ")") 
         .call(d3.axisBottom(MainXScale).ticks(8)) 
-          .attr("font-size", '10px'); 
+          .attr("font-size", '10px')
+          .attr("font-weight", "bold"); 
 
     // Add y axis to vis  
     const main_y_axis = MAIN.append("g") 
@@ -140,7 +141,8 @@ function build_plots() {
               "," + (MARGINS.top) + ")") 
         .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
             return (d * 100) + "%"}))
-          .attr("font-size", '10px'); 
+          .attr("font-size", '10px')
+          .attr("font-weight", "bold"); 
 
     // dot for legend
     MAIN.selectAll("mydots")
@@ -321,7 +323,8 @@ function build_plots() {
         .attr("transform", "translate(" + SLIDE_MARGINS.left + 
               "," + (SLIDE_VIS_H + SLIDE_MARGINS.top) + ")") 
         .call(d3.axisBottom(SlideXScale).ticks(8)) 
-          .attr("font-size", '10px');
+          .attr("font-size", '10px')
+          .attr("font-weight", "bold");
 
     // Add brushing
     // adding brushing
@@ -438,7 +441,8 @@ function build_plots() {
         "," + (MARGINS.top) + ")") 
         .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
         return (d * 100) + "%"}))
-        .attr("font-size", '10px'); 
+        .attr("font-size", '10px')
+        .attr("font-weight", "bold"); 
     
 
       MAIN.selectAll("mydots")
