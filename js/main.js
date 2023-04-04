@@ -1,7 +1,7 @@
 // constants for plot design
 const FRAME_HEIGHT = 510;
 const FRAME_WIDTH = 900; 
-const MARGINS = {left: 50, right: 50, top: 25, bottom: 25};
+const MARGINS = {left: 75, right: 50, top: 25, bottom: 25};
 
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
@@ -50,11 +50,15 @@ function build_plots() {
         "PPI" : MaxPPI,
         "Unemployment_Claims" : MaxUClaims,
         "Unemployment_Rate" : MaxURate};
+
         
-    const dates = [];
-    for (let obj of data) {
-      dates.push(obj.DATE)
-    }
+
+
+   
+    const vis1_keys = ['CPI', 'PPI', "Unemployment Rate", "Unemployment Claims", "Payrolls"];
+    const key_colors = ["rgb(27, 139, 27)", "rgba(211, 23, 23, 0.824)", "rgb(237, 138, 0)", "Purple", "rgb(49, 49, 183)"];
+    const spacing = [10, 60, 110, 250, 400];
+
 
     const domain = d3.extent(data, (d) => d.DATE);
 
@@ -75,6 +79,31 @@ function build_plots() {
                     .attr("height", FRAME_HEIGHT)
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame"); 
+
+
+    function draw_recession(start, end) {
+        const formatDate = d3.timeParse("%-m/%-d/%Y");
+
+        const recession_bar = MAIN.append("rect")
+            .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
+            .attr("y", MARGINS.top)
+            .attr("height", VIS_HEIGHT)
+            .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
+            .attr("class", 'recession_bar');
+    }
+    
+
+    /// add 1990 recession
+    const _1990_bar = draw_recession("1/1/1990", "3/1/1991");        
+    // add 2001 recession
+    const _2001_bar = draw_recession("1/1/2001", "12/31/2001");
+    
+    // add 2008 recession
+    const _2008_bar = draw_recession("1/1/2008", "12/31/2008");
+    
+    // add covid 2020 recession
+    const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
+    
 
     // plot payroll counts
     const payrolls = MAIN.append('path')
@@ -121,7 +150,8 @@ function build_plots() {
         .attr("transform", "translate(" + MARGINS.left + 
               "," + (VIS_HEIGHT + MARGINS.top) + ")") 
         .call(d3.axisBottom(MainXScale).ticks(8)) 
-          .attr("font-size", '10px'); 
+          .attr("font-size", '10px')
+          .attr("font-weight", "bold"); 
 
     // Add y axis to vis  
     const main_y_axis = MAIN.append("g") 
@@ -129,7 +159,69 @@ function build_plots() {
               "," + (MARGINS.top) + ")") 
         .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
             return (d * 100) + "%"}))
-          .attr("font-size", '10px'); 
+          .attr("font-size", '10px')
+          .attr("font-weight", "bold"); 
+
+    main_y_axis.append("text")
+    .attr("class", "y-axis-label")
+    .attr("x", -VIS_HEIGHT / 2)
+    .attr("y", -MARGINS.left / 2 - 5)
+    .attr("fill", "#000")
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "middle")
+    .style("font-size", "12px")
+    .style("font-weight", "bold")
+    .text("% of Maximum");
+
+    // dot for legend
+    MAIN.selectAll("mydots")
+        .data(vis1_keys)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d,i){ return MARGINS.left + spacing[i]})
+        .attr("cy", MARGINS.top - 10) 
+        .attr("r", 4)
+        .style("fill", function(d,i){ return key_colors[i]});
+
+    // square for legend
+    MAIN.selectAll("myrect")
+        .data(vis1_keys)
+        .enter()
+        .append("rect")
+        .attr("x", 540)
+        .attr("y", MARGINS.top - 18)
+        .attr("height", 15)
+        .attr("width", 15)
+        .attr("fill", "pink")
+        .style("opacity", 0.5);
+
+    // text for legend
+    MAIN.selectAll("mylabels")
+        .data(vis1_keys)
+        .enter()
+        .append("text")
+        .attr("x", function(d,i){ return MARGINS.left + spacing[i] + 10})
+        .attr("y", MARGINS.top - 10)
+        .style("fill", function(d,i){ return key_colors[i]})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("alignment-baseline", "middle")
+        .style("font-size","12px");
+
+    // adding another label for the rectangle
+    MAIN.selectAll("mylabels")
+        .data(vis1_keys)
+        .enter()
+        .append("text")
+        .attr("x", 540 + 15)
+        .attr("y", MARGINS.top - 10)
+        .style("fill", "pink")
+        .text("Economic Recession")
+        .attr("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("alignment-baseline", "middle")
+        .style("font-size","12px");
 
     // add a tooltip to the visualization
     const TOOLTIP = d3.select("#mainvis")
@@ -286,7 +378,8 @@ function build_plots() {
         .attr("transform", "translate(" + SLIDE_MARGINS.left + 
               "," + (SLIDE_VIS_H + SLIDE_MARGINS.top) + ")") 
         .call(d3.axisBottom(SlideXScale).ticks(8)) 
-          .attr("font-size", '10px');
+          .attr("font-size", '10px')
+          .attr("font-weight", "bold");
 
     // Add brushing
     // adding brushing
@@ -394,7 +487,8 @@ function build_plots() {
         .attr("transform", "translate(" + MARGINS.left + 
         "," + (VIS_HEIGHT + MARGINS.top) + ")") 
         .call(d3.axisBottom(MainXScale).ticks(8)) 
-        .attr("font-size", '10px'); 
+        .attr("font-size", '10px')
+        .style("font-weight", "bold"); 
 
         // Add y axis to vis  
         const main_y_axis = MAIN.append("g") 
@@ -402,8 +496,43 @@ function build_plots() {
         "," + (MARGINS.top) + ")") 
         .call(d3.axisLeft(MainYScale).ticks(4).tickFormat(function(d) {
         return (d * 100) + "%"}))
-        .attr("font-size", '10px'); 
-      
+        .attr("font-size", '10px')
+        .attr("font-weight", "bold");
+
+        main_y_axis.append("text")
+            .attr("class", "y-axis-label")
+            .attr("x", -VIS_HEIGHT / 2)
+            .attr("y", -MARGINS.left / 2 - 5)
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .style("text-anchor", "middle")
+            .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .text("% of Maximum");
+    
+
+      MAIN.selectAll("mydots")
+        .data(vis1_keys)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d,i){ return MARGINS.left + spacing[i]})
+        .attr("cy", MARGINS.top - 10) 
+        .attr("r", 4)
+        .style("fill", function(d,i){ return key_colors[i]});
+
+    // text for legend
+    MAIN.selectAll("mylabels")
+        .data(vis1_keys)
+        .enter()
+        .append("text")
+        .attr("x", function(d,i){ return MARGINS.left + spacing[i] + 10})
+        .attr("y", MARGINS.top - 10)
+        .style("fill", function(d,i){ return key_colors[i]})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("alignment-baseline", "middle")
+        .style("font-size","12px");
       
     // add a tooltip to the brushed main viz
     const TOOLTIP = d3.select("#mainvis")
