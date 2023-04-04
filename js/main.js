@@ -18,6 +18,7 @@ function build_plots() {
 
   // reading in the data
   d3.csv("data/NoNullsData.csv", 
+  d3.csv("data/GDPwDates.csv",
   function(d){
     return {DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,
@@ -43,6 +44,7 @@ function build_plots() {
     const MaxURate = d3.max(data, (d) => { return d.URate; });
     
     const MaxUClaims = d3.max(data, (d) => { return d.UClaims; });
+
 
     const max_list = 
         {"Payroll" : MaxPayroll,
@@ -704,7 +706,7 @@ function build_plots() {
 
     };
     
-});
+}));
 };
 
 build_plots();
