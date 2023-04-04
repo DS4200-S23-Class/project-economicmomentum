@@ -8,7 +8,7 @@ const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
 const SLIDE_HEIGHT = 115;
 const SLIDE_WIDTH = 900; 
-const SLIDE_MARGINS = {left: 50, right: 50, top: 10, bottom: 20};
+const SLIDE_MARGINS = {left: 75, right: 50, top: 10, bottom: 20};
 
 const SLIDE_VIS_H = SLIDE_HEIGHT - MARGINS.top - MARGINS.bottom;
 const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right; 
@@ -192,7 +192,7 @@ function build_plots() {
         .attr("y", MARGINS.top - 18)
         .attr("height", 15)
         .attr("width", 15)
-        .attr("fill", "pink")
+        .attr("fill", "grey")
         .style("opacity", 0.5);
 
     // text for legend
@@ -216,7 +216,7 @@ function build_plots() {
         .append("text")
         .attr("x", 540 + 20)
         .attr("y", MARGINS.top - 10)
-        .style("fill", "pink")
+        .style("fill", "grey")
         .text("Economic Recession")
         .attr("text-anchor", "left")
         .style("font-weight", "bold")
@@ -400,9 +400,6 @@ function build_plots() {
             .on("start brush", updateMain)
           );
     
-
-
-
     function updateMain(event) {
         extent = event.selection  //get coordinates
 
