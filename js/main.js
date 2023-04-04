@@ -24,7 +24,7 @@ function build_plots() {
             CPI : +d.CPI,
             UClaims : +d.UClaims,
             PPI : +d.PPI,
-            URate : +d.URate}
+            URate : +d.URate};
   }
 
   ).then((data) => {
