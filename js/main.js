@@ -17,7 +17,7 @@ const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right;
 function build_plots() {
 
   // reading in the data
-  d3.csv("data/NoNullsData.csv", 
+  d3.csv("data/GDPwDates.csv", 
   function(d){
     return {DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,
@@ -574,7 +574,7 @@ function build_plots() {
         .attr("y", MARGINS.top - 18)
         .attr("height", 15)
         .attr("width", 15)
-        .attr("fill", "pink")
+        .attr("fill", "gray")
         .style("opacity", 0.5);
 
     // text for legend
@@ -598,7 +598,7 @@ function build_plots() {
         .append("text")
         .attr("x", 540 + 20)
         .attr("y", MARGINS.top - 10)
-        .style("fill", "pink")
+        .style("fill", "gray")
         .text("Economic Recession")
         .attr("text-anchor", "left")
         .style("font-weight", "bold")
