@@ -44,8 +44,8 @@ function detail_vis(index) {
 
     // constants for plot design
     const DETAIL_FRAME_HEIGHT = 375;
-    const DETAIL_FRAME_WIDTH = 550; 
-    const DETAIL_MARGINS = {left: 55, right: 50, top: 25, bottom: 25};
+    const DETAIL_FRAME_WIDTH = 650; 
+    const DETAIL_MARGINS = {left: 75, right: 50, top: 25, bottom: 25};
 
     const DETAIL_VIS_HEIGHT = DETAIL_FRAME_HEIGHT - DETAIL_MARGINS.top - DETAIL_MARGINS.bottom;
     const DETAIL_VIS_WIDTH = DETAIL_FRAME_WIDTH - DETAIL_MARGINS.left - DETAIL_MARGINS.right; 
@@ -143,7 +143,21 @@ function detail_vis(index) {
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(PayrollYScale).ticks(4))
                             .attr("font-size", '10px'); 
+
+    DETAIL_Y_AXIS.append("text")
+    .attr("class", "y-axis-label")
+    .attr("x", - DETAIL_VIS_HEIGHT / 2)
+    .attr("y", - DETAIL_MARGINS.left / 2 - 5)
+    .attr("fill", "#000")
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "middle")
+    .style("font-size", "12px")
+    .style("font-weight", "bold")
+    .text("% of Maximum");
+
     };
+
+    
 
     // check for urate, plot if true
     if (index == 1) {
