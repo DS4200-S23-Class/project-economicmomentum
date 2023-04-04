@@ -8,7 +8,7 @@ const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
 const SLIDE_HEIGHT = 115;
 const SLIDE_WIDTH = 900; 
-const SLIDE_MARGINS = {left: 50, right: 50, top: 10, bottom: 20};
+const SLIDE_MARGINS = {left: 75, right: 50, top: 10, bottom: 20};
 
 const SLIDE_VIS_H = SLIDE_HEIGHT - MARGINS.top - MARGINS.bottom;
 const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right; 
@@ -51,10 +51,7 @@ function build_plots() {
         "Unemployment_Claims" : MaxUClaims,
         "Unemployment_Rate" : MaxURate};
 
-        
-
-
-   
+    // setting constants for legend on main viz   
     const vis1_keys = ['CPI', 'PPI', "Unemployment Rate", "Unemployment Claims", "Payrolls"];
     const key_colors = ["rgb(27, 139, 27)", "rgba(211, 23, 23, 0.824)", "rgb(237, 138, 0)", "Purple", "rgb(49, 49, 183)"];
     const spacing = [10, 60, 110, 250, 400];
@@ -103,6 +100,36 @@ function build_plots() {
     
     // add covid 2020 recession
     const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
+
+    // adding recession tooltip
+
+    const TOOLTIP_BAR = d3.select("#mainvis")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+
+    function mouseMove_BAR(event, d) {
+
+        TOOLTIP.html("Recession Start" + "</br>" + "Recession End:")
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 50) + "px")
+                    .style("background-color", stroke_color);
+
+    };
+
+    function mouseOver_BAR(event, d) {
+        TOOLTIP_BAR.style("opacity", 1);
+    };
+
+
+    function mouseLeave_BAR(event, d) {
+        TOOLTIP_BAR.style("opacity", 0);
+    };
+
+    MAIN.selectAll(".recession_bar")
+        .on("mouseover", mouseOver_BAR)
+        .on("mousemove", mouseMove_BAR)
+        .on("mouseleave", mouseLeave_BAR);
     
 
     // plot payroll counts
@@ -192,7 +219,7 @@ function build_plots() {
         .attr("y", MARGINS.top - 18)
         .attr("height", 15)
         .attr("width", 15)
-        .attr("fill", "pink")
+        .attr("fill", "grey")
         .style("opacity", 0.5);
 
     // text for legend
@@ -214,9 +241,9 @@ function build_plots() {
         .data(vis1_keys)
         .enter()
         .append("text")
-        .attr("x", 540 + 15)
+        .attr("x", 540 + 20)
         .attr("y", MARGINS.top - 10)
-        .style("fill", "pink")
+        .style("fill", "grey")
         .text("Economic Recession")
         .attr("text-anchor", "left")
         .style("font-weight", "bold")
@@ -281,6 +308,7 @@ function build_plots() {
 
     function mouseOver(event, d) {
         TOOLTIP.style("opacity", 1);
+
     };
 
 
@@ -372,6 +400,31 @@ function build_plots() {
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.UClaims/MaxUClaims) + SLIDE_MARGINS.top}))
                         .attr("class", "slideline");
+
+    // add recession bars to the slider
+
+    function draw_recession_slider (start, end) {
+        const formatDate = d3.timeParse("%-m/%-d/%Y");
+
+        const recession_bar = SLIDE.append("rect")
+            .attr("x", SLIDE_MARGINS.left + (SlideXScale((formatDate(start)))))
+            .attr("y", SLIDE_MARGINS.top)
+            .attr("height", SLIDE_VIS_H)
+            .attr("width", ((SlideXScale((formatDate(end)))) - (SlideXScale((formatDate(start))))))
+            .attr("class", 'recession_bar');
+    }
+    
+
+    /// add 1990 recession
+    const _1990_bar_2 = draw_recession_slider("1/1/1990", "3/1/1991");        
+    // add 2001 recession
+    const _2001_bar_2 = draw_recession_slider("1/1/2001", "12/31/2001");
+    
+    // add 2008 recession
+    const _2008_bar_2 = draw_recession_slider("1/1/2008", "12/31/2008");
+    
+    // add covid 2020 recession
+    const _2020_bar_2 = draw_recession_slider("1/1/2020", "12/31/2020");
 
     // Add x axis to vis  
     SLIDE.append("g") 
@@ -480,7 +533,32 @@ function build_plots() {
             .attr("d", d3.line()
                 .x((d) => {return MARGINS.left + MainXScale(d.DATE)})
                 .y((d) => {return MainYScale(d.UClaims/MaxUClaims) + MARGINS.top}))
-            .attr("class", "Unemployment_Claims");
+            .attr("class", "Unemployment_Claims")
+            .style("stroke_color", "purple");
+
+
+        function draw_recession(start, end) {
+        const formatDate = d3.timeParse("%-m/%-d/%Y");
+
+        const recession_bar = MAIN.append("rect")
+            .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
+            .attr("y", MARGINS.top)
+            .attr("height", VIS_HEIGHT)
+            .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
+            .attr("class", 'recession_bar');
+        };
+    
+
+    /// add 1990 recession
+    const _1990_bar = draw_recession("1/1/1990", "3/1/1991");        
+    // add 2001 recession
+    const _2001_bar = draw_recession("1/1/2001", "12/31/2001");
+    
+    // add 2008 recession
+    const _2008_bar = draw_recession("1/1/2008", "12/31/2008");
+    
+    // add covid 2020 recession
+    const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
         
         // Add x axis to vis  
         const main_x_axis = MAIN.append("g") 
@@ -511,7 +589,8 @@ function build_plots() {
             .text("% of Maximum");
     
 
-      MAIN.selectAll("mydots")
+      // dot for legend
+    MAIN.selectAll("mydots")
         .data(vis1_keys)
         .enter()
         .append("circle")
@@ -519,6 +598,18 @@ function build_plots() {
         .attr("cy", MARGINS.top - 10) 
         .attr("r", 4)
         .style("fill", function(d,i){ return key_colors[i]});
+
+    // square for legend
+    MAIN.selectAll("myrect")
+        .data(vis1_keys)
+        .enter()
+        .append("rect")
+        .attr("x", 540)
+        .attr("y", MARGINS.top - 18)
+        .attr("height", 15)
+        .attr("width", 15)
+        .attr("fill", "grey")
+        .style("opacity", 0.5);
 
     // text for legend
     MAIN.selectAll("mylabels")
@@ -529,6 +620,20 @@ function build_plots() {
         .attr("y", MARGINS.top - 10)
         .style("fill", function(d,i){ return key_colors[i]})
         .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("alignment-baseline", "middle")
+        .style("font-size","12px");
+
+    // adding another label for the rectangle
+    MAIN.selectAll("mylabels")
+        .data(vis1_keys)
+        .enter()
+        .append("text")
+        .attr("x", 540 + 20)
+        .attr("y", MARGINS.top - 10)
+        .style("fill", "grey")
+        .text("Economic Recession")
         .attr("text-anchor", "left")
         .style("font-weight", "bold")
         .style("alignment-baseline", "middle")
