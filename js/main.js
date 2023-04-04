@@ -343,6 +343,8 @@ function build_plots() {
     // add covid 2020 recession
     const slide_2020_bar = slide_draw_recession("1/1/2020", "12/31/2020");
 
+    const slide_1990_bar = slide_draw_recession("1/1/1990", "3/1/1991"); 
+
     // plot payroll counts
     const s_payrolls = SLIDE.append('path')
                         .datum(data) // passed from .then  
