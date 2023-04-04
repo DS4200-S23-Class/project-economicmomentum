@@ -87,6 +87,28 @@ function build_plots() {
                     .attr("width", FRAME_WIDTH)
                     .attr("class", "frame"); 
 
+
+    function draw_recession(start, end) {
+        const formatDate = d3.timeParse("%-m/%-d/%Y");
+
+        const recession_bar = MAIN.append("rect")
+            .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
+            .attr("y", MARGINS.top)
+            .attr("height", VIS_HEIGHT)
+            .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
+            .attr("class", 'recession_bar');
+    }
+                
+    // add 2001 recession
+    const _2001_bar = draw_recession("1/1/2001", "12/31/2001");
+    
+    // add 2008 recession
+    const _2008_bar = draw_recession("1/1/2008", "12/31/2008");
+    
+    // add covid 2020 recession
+    const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
+    
+
     // plot payroll counts
     const payrolls = MAIN.append('path')
                         .datum(data) // passed from .then  
@@ -284,7 +306,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.Payrolls/MaxPayroll) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline"); 
+                        .attr("class", "slidepayroll"); 
 
     // plot unemployment rate
     const s_unemployment = SLIDE.append('path')
@@ -292,7 +314,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.URate/MaxURate) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline"); 
+                        .attr("class", "slideurate"); 
     
     // plot PPI
     const s_ppi = SLIDE.append('path')
@@ -300,7 +322,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.PPI/MaxPPI) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline"); 
+                        .attr("class", "slideppi"); 
 
     // plot CPI
     const s_cpi = SLIDE.append('path')
@@ -308,7 +330,7 @@ function build_plots() {
                         .attr("d", d3.line()
                             .x((d) => {return SLIDE_MARGINS.left + SlideXScale(d.DATE)})
                             .y((d) => {return SlideYScale(d.CPI/MaxCPI) + SLIDE_MARGINS.top}))
-                        .attr("class", "slideline");
+                        .attr("class", "slidecpi");
 
      // plot claims
      const s_claims = SLIDE.append('path')
