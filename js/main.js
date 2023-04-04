@@ -188,7 +188,8 @@ function build_plots() {
             return (d * 100) + "%"}))
           .attr("font-size", '10px')
           .attr("font-weight", "bold"); 
-
+          
+    // Add y axis label 
     main_y_axis.append("text")
     .attr("class", "y-axis-label")
     .attr("x", -VIS_HEIGHT / 2)

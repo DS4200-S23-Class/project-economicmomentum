@@ -138,22 +138,22 @@ function detail_vis(index) {
  
 
       // Add y axis to vis  
-      const DETAIL_Y_AXIS = DETAIL.append("g") 
+    const DETAIL_Y_AXIS = DETAIL.append("g") 
                             .attr("transform", "translate(" + DETAIL_MARGINS.left + 
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(PayrollYScale).ticks(4))
                             .attr("font-size", '10px'); 
-
+     // Add y axis labels to vis  
     DETAIL_Y_AXIS.append("text")
-    .attr("class", "y-axis-label")
-    .attr("x", - DETAIL_VIS_HEIGHT / 2)
-    .attr("y", - DETAIL_MARGINS.left / 2 - 20)
-    .attr("fill", "#000")
-    .attr("transform", "rotate(-90)")
-    .style("text-anchor", "middle")
-    .style("font-size", "12px")
-    .style("font-weight", "bold")
-    .text("% of Maximum");
+        .attr("class", "y-axis-label")
+        .attr("x", - DETAIL_VIS_HEIGHT / 2)
+        .attr("y", - DETAIL_MARGINS.left / 2 - 20)
+        .attr("fill", "#000")
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text("Thousands of Persons");
 
     };
 
@@ -206,7 +206,18 @@ function detail_vis(index) {
                             .attr("transform", "translate(" + DETAIL_MARGINS.left + 
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(URateYScale).ticks(4))
-                            .attr("font-size", '10px'); 
+                            .attr("font-size", '10px');
+       // Add y axis labels to vis  
+        DETAIL_Y_AXIS.append("text")
+            .attr("class", "y-axis-label")
+            .attr("x", - DETAIL_VIS_HEIGHT / 2)
+            .attr("y", - DETAIL_MARGINS.left / 2 - 20)
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .style("text-anchor", "middle")
+            .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .text("Percent"); 
     }
     // check for cpi, plot if true
     if (index == 2) {
@@ -250,12 +261,24 @@ function detail_vis(index) {
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
-      // Add y axis to vis  
-      const DETAIL_Y_AXIS = DETAIL.append("g") 
+    // Add y axis to vis  
+    const DETAIL_Y_AXIS = DETAIL.append("g") 
                             .attr("transform", "translate(" + DETAIL_MARGINS.left + 
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(CPIYScale).ticks(4))
-                            .attr("font-size", '10px'); 
+                            .attr("font-size", '10px');
+     // Add y axis labels to vis  
+    DETAIL_Y_AXIS.append("text")
+        .attr("class", "y-axis-label")
+        .attr("x", - DETAIL_VIS_HEIGHT / 2)
+        .attr("y", - DETAIL_MARGINS.left / 2 - 20)
+        .attr("fill", "#000")
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text("Percent Change at Annual Rate");
+
     }
     // check for ppi, plot if true
     if (index == 3) {
@@ -300,12 +323,24 @@ function detail_vis(index) {
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
 
-      // Add y axis to vis  
-      const DETAIL_Y_AXIS = DETAIL.append("g") 
+    // Add y axis to vis  
+    const DETAIL_Y_AXIS = DETAIL.append("g") 
                             .attr("transform", "translate(" + DETAIL_MARGINS.left + 
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(PPIYScale).ticks(4))
                             .attr("font-size", '10px'); 
+    // Add y axis labels to vis  
+    DETAIL_Y_AXIS.append("text")
+        .attr("class", "y-axis-label")
+        .attr("x", - DETAIL_VIS_HEIGHT / 2)
+        .attr("y", - DETAIL_MARGINS.left / 2 - 20)
+        .attr("fill", "#000")
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text("Percent Change at Annual Rate");
+
     }
     // check for uclaims, plot if true
     if (index == 4) {
@@ -356,6 +391,18 @@ function detail_vis(index) {
                               "," + (DETAIL_MARGINS.top) + ")") 
                             .call(d3.axisLeft(UClaimsYScale).ticks(4))
                             .attr("font-size", '10px'); 
+    
+    // Add y axis labels to vis  
+    DETAIL_Y_AXIS.append("text")
+        .attr("class", "y-axis-label")
+        .attr("x", - DETAIL_VIS_HEIGHT / 2)
+        .attr("y", - DETAIL_MARGINS.left / 2 - 20)
+        .attr("fill", "#000")
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text("Count");
     }
   });
 };
