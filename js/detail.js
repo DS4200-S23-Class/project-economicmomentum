@@ -17,7 +17,7 @@ const indicator_info_text_payrolls = "All Employees: Total Nonfarm, commonly kno
 
 function detail_vis(index) {
   // reading in the data
-  d3.csv("data/NoNullsData.csv", 
+  d3.csv("data/GDPwDates.csv", 
   function(d){
     return { DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,
@@ -44,8 +44,8 @@ function detail_vis(index) {
 
     // constants for plot design
     const DETAIL_FRAME_HEIGHT = 375;
-    const DETAIL_FRAME_WIDTH = 650; 
-    const DETAIL_MARGINS = {left: 75, right: 50, top: 25, bottom: 25};
+    const DETAIL_FRAME_WIDTH = 550; 
+    const DETAIL_MARGINS = {left: 65, right: 25, top: 25, bottom: 25};
 
     const DETAIL_VIS_HEIGHT = DETAIL_FRAME_HEIGHT - DETAIL_MARGINS.top - DETAIL_MARGINS.bottom;
     const DETAIL_VIS_WIDTH = DETAIL_FRAME_WIDTH - DETAIL_MARGINS.left - DETAIL_MARGINS.right; 
@@ -147,7 +147,7 @@ function detail_vis(index) {
     DETAIL_Y_AXIS.append("text")
     .attr("class", "y-axis-label")
     .attr("x", - DETAIL_VIS_HEIGHT / 2)
-    .attr("y", - DETAIL_MARGINS.left / 2 - 5)
+    .attr("y", - DETAIL_MARGINS.left / 2 - 20)
     .attr("fill", "#000")
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "middle")
