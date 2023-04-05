@@ -173,6 +173,18 @@ h2 {
   padding: 5px;
 }
 
+.recession_tooltip {
+  position: absolute;
+  border:  solid;
+  border-color: black;
+  color: white;
+  background-color: grey;
+  border-width: 3px;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px; 
+}
+
 /* info box styling */
 .fulloutline {
     border-width: 2px;

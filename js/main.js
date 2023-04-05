@@ -88,8 +88,12 @@ function build_plots() {
             .attr("y", MARGINS.top)
             .attr("height", VIS_HEIGHT)
             .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
-            .attr("class", 'recession_bar');
-    }
+            .attr("class", 'recession_bar')
+            .attr("start", start)
+            .attr("end", end);
+
+            return recession_bar;
+    };
     
 
     /// add 1990 recession
@@ -111,16 +115,21 @@ function build_plots() {
                         .style("opacity", 0);
 
     function mouseMove_BAR(event, d) {
+        const formatDate = d3.timeFormat("%-m/%-d/%Y");
+        const start = d3.select(this).attr("start");
+        const end = d3.select(this).attr("end");
+        const formattedStart = formatDate(d3.timeParse("%-m/%-d/%Y")(start));
+        const formattedEnd = formatDate(d3.timeParse("%-m/%-d/%Y")(end));
 
-        TOOLTIP.html("Recession Start" + "</br>" + "Recession End:")
+        TOOLTIP_BAR.html("Recession Start: " + start + "</br>" + "Recession End: " + end)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 50) + "px")
-                    .style("background-color", stroke_color);
+                    .attr("class", "recession_tooltip");
 
     };
 
     function mouseOver_BAR(event, d) {
-        TOOLTIP_BAR.style("opacity", 1);
+        TOOLTIP_BAR.style("opacity", 0.75);
     };
 
 
@@ -447,11 +456,8 @@ function build_plots() {
     
     function updateMain(event) {
         extent = event.selection  //get coordinates
-
-        d3.selectAll("#mainvis > *").remove(); 
-
+        d3.selectAll("#mainvis > *").remove();
         renderMain(extent);
-        console.log("updatemain called");
     }
 
     function renderMain(brush_coords){
@@ -460,15 +466,12 @@ function build_plots() {
         let x0 = brush_coords[0],
             x1 = brush_coords[1];
         
-        console.log(x0);
-        console.log(x1);
+        
         
         //ISSUE IS HERE, date formatting and date domain formatting again I think
         const slideMin = SlideXScale.invert(x0 - SLIDE_MARGINS.left).getTime();
         const slideMax = SlideXScale.invert(x1  - SLIDE_MARGINS.left).getTime();
 
-        console.log(slideMin)
-        console.log(slideMax)
 
         // Create new data with the selection?
         let dataFilter1 = data.filter(function(row){
@@ -478,8 +481,6 @@ function build_plots() {
             return row['DATE'] <= slideMax});
 
         const domain = [slideMin, slideMax];
-
-        console.log(domain)
    
         //setting scales
         const MainXScale = d3.scaleTime() 
@@ -541,15 +542,18 @@ function build_plots() {
 
 
         function draw_recession(start, end) {
-        const formatDate = d3.timeParse("%-m/%-d/%Y");
+            const formatDate = d3.timeParse("%-m/%-d/%Y");
 
-        if ((formatDate(start)) >= slideMin)
-        MAIN.append("rect")
-            .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
-            .attr("y", MARGINS.top)
-            .attr("height", VIS_HEIGHT)
-            .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
-            .attr("class", 'recession_bar');
+            const recession_bar = MAIN.append("rect")
+                .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
+                .attr("y", MARGINS.top)
+                .attr("height", VIS_HEIGHT)
+                .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
+                .attr("class", 'recession_bar')
+                .attr("start", start)
+                .attr("end", end);
+
+            return recession_bar;
         };
     
 
@@ -563,6 +567,40 @@ function build_plots() {
     
     // add covid 2020 recession
     const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
+
+    const TOOLTIP_BAR = d3.select("#mainvis")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+
+    function mouseMove_BAR(event, d) {
+        const formatDate = d3.timeFormat("%-m/%-d/%Y");
+
+        const start = d3.select(this).attr("start");
+        const end = d3.select(this).attr("end");
+        const formattedStart = formatDate(d3.timeParse("%-m/%-d/%Y")(start));
+        const formattedEnd = formatDate(d3.timeParse("%-m/%-d/%Y")(end));
+
+        TOOLTIP_BAR.html("Recession Start: " + start + "</br>" + "Recession End: " + end)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 50) + "px")
+                    .attr("class", "recession_tooltip");
+
+    };
+
+    function mouseOver_BAR(event, d) {
+        TOOLTIP_BAR.style("opacity", 0.75);
+    };
+
+
+    function mouseLeave_BAR(event, d) {
+        TOOLTIP_BAR.style("opacity", 0);
+    };
+
+    MAIN.selectAll(".recession_bar")
+        .on("mouseover", mouseOver_BAR)
+        .on("mousemove", mouseMove_BAR)
+        .on("mouseleave", mouseLeave_BAR);
         
     // Add x axis to vis  
     const main_x_axis = MAIN.append("g") 
