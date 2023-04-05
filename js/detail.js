@@ -278,7 +278,7 @@ function detail_vis(index) {
         .style("text-anchor", "middle")
         .style("font-size", "12px")
         .style("font-weight", "bold")
-        .text("Percent Change at Annual Rate");
+        .text("Price Level");
 
     }
     // check for ppi, plot if true
@@ -340,7 +340,7 @@ function detail_vis(index) {
         .style("text-anchor", "middle")
         .style("font-size", "12px")
         .style("font-weight", "bold")
-        .text("Percent Change at Annual Rate");
+        .text("Price Level");
 
     }
     // check for uclaims, plot if true
