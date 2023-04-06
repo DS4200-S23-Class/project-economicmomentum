@@ -544,16 +544,17 @@ function build_plots() {
         function draw_recession(start, end) {
             const formatDate = d3.timeParse("%-m/%-d/%Y");
 
-            const recession_bar = MAIN.append("rect")
+            if ((formatDate(start)) >= slideMin) {
+                MAIN.append("rect")
                 .attr("x", MARGINS.left + (MainXScale((formatDate(start)))))
                 .attr("y", MARGINS.top)
                 .attr("height", VIS_HEIGHT)
                 .attr("width", ((MainXScale((formatDate(end)))) - (MainXScale((formatDate(start))))))
                 .attr("class", 'recession_bar')
                 .attr("start", start)
-                .attr("end", end);
-
-            return recession_bar;
+                .attr("end", end); 
+            }
+                
         };
     
 
