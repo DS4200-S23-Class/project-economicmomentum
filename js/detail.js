@@ -1,7 +1,7 @@
 // code for detail graph and info box
 
 //global constants for detail vis info box
-const dateFormat = d3.timeFormat("%-m/%-d/%Y");
+const DetailDateFormat = d3.timeFormat("%-m/%-d/%Y");
 
 // constants for plot design
 const DetailFrameHeight = 375;
