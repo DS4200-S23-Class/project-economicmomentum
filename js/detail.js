@@ -105,7 +105,7 @@ function MakeDetailVis(index) {
       // add a DetailTooltip to the visualization
       const DetailDetailTooltip = d3.select("#detailgraph")
                         .append("div")
-                        .attr("class", "DetailTooltip")
+                        .attr("class", "tooltip")
                         .style("opacity", 0);                           
                         
       function mouseMove(event, d) {
@@ -166,7 +166,7 @@ function MakeDetailVis(index) {
 
       const DetailDetailTooltip = d3.select("#detailgraph")
                         .append("div")
-                        .attr("class", "DetailTooltip")
+                        .attr("class", "tooltip")
                         .style("opacity", 0);                           
                         
       function mouseMove(event, d) {
@@ -223,7 +223,7 @@ function MakeDetailVis(index) {
 
       const DetailDetailTooltip = d3.select("#detailgraph")
                         .append("div")
-                        .attr("class", "DetailTooltip")
+                        .attr("class", "tooltip")
                         .style("opacity", 0);                           
                         
       function mouseMove(event, d) {
@@ -281,7 +281,7 @@ function MakeDetailVis(index) {
 
       const DetailTooltip = d3.select("#detailgraph")
                         .append("div")
-                        .attr("class", "DetailTooltip")
+                        .attr("class", "tooltip")
                         .style("opacity", 0);                           
                         
       function mouseMove(event, d) {
@@ -338,7 +338,7 @@ function MakeDetailVis(index) {
 
       const DetailTooltip = d3.select("#detailgraph")
                         .append("div")
-                        .attr("class", "DetailTooltip")
+                        .attr("class", "tooltip")
                         .style("opacity", 0);                           
                         
       function mouseMove(event, d) {
