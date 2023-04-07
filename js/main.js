@@ -373,10 +373,8 @@ function buildPlots() {
 
     // add recession bars to the slider
 
-    function draw_recession_slider (start, end) {
-        const formatDate = d3.timeParse("%-m/%-d/%Y");
-
-        const recession_bar = SLIDE.append("rect")
+    function drawRecessionSlider (start, end) {
+        const SlideRecession = SLIDE.append("rect")
             .attr("x", SlideMargins.left + (SlideXScale((formatDate(start)))))
             .attr("y", SlideMargins.top)
             .attr("height", SlideVisHeight)
@@ -385,16 +383,11 @@ function buildPlots() {
     }
     
 
-    /// add 1990 recession
-    const _1990_bar_2 = draw_recession_slider("1/1/1990", "3/1/1991");        
-    // add 2001 recession
-    const _2001_bar_2 = draw_recession_slider("1/1/2001", "12/31/2001");
-    
-    // add 2008 recession
-    const _2008_bar_2 = draw_recession_slider("12/1/2007", "6/1/2009");
-    
-    // add covid 2020 recession
-    const _2020_bar_2 = draw_recession_slider("1/1/2020", "12/31/2020");
+    /// add 1990, 2001, 2008. 2020 recession
+    const SLide1990 = drawRecessionSlider("1/1/1990", "3/1/1991");        
+    const Slide2001 = drawRecessionSlider("1/1/2001", "12/31/2001");
+    const Slide2008 = drawRecessionSlider("12/1/2007", "6/1/2009");
+    const Slide2020 = drawRecessionSlider("1/1/2020", "12/31/2020");
 
     // Add x axis to vis  
     SLIDE.append("g") 
@@ -419,19 +412,13 @@ function buildPlots() {
     }
 
     function renderMain(brush_coords){
-
-
         let x0 = brush_coords[0],
             x1 = brush_coords[1];
         
-        
-        
-        //ISSUE IS HERE, date formatting and date domain formatting again I think
         const slideMin = SlideXScale.invert(x0 - SlideMargins.left).getTime();
         const slideMax = SlideXScale.invert(x1  - SlideMargins.left).getTime();
 
-
-        // Create new data with the selection?
+        // create new data set with only brushed dates
         let dataFilter1 = data.filter(function(row){
             return row['DATE'] >= slideMin});
 
@@ -499,9 +486,7 @@ function buildPlots() {
             .style("stroke_color", "purple");
 
 
-        function draw_recession(start, end) {
-            const formatDate = d3.timeParse("%-m/%-d/%Y");
-
+        function RenderRecession(start, end) {
             if ((formatDate(start)) >= slideMin) {
                 MAIN.append("rect")
                 .attr("x", MainMargins.left + (MainXScale((formatDate(start)))))
@@ -511,21 +496,14 @@ function buildPlots() {
                 .attr("class", 'recession_bar')
                 .attr("start", start)
                 .attr("end", end); 
-            }
-                
+            }  
         };
     
-
-    /// add 1990 recession
-    const _1990_bar = draw_recession("1/1/1990", "3/1/1991");        
-    // add 2001 recession
-    const _2001_bar = draw_recession("1/1/2001", "12/31/2001");
-    
-    // add 2008 recession
-    const _2008_bar = draw_recession("12/1/2007", "6/1/2009");
-    
-    // add covid 2020 recession
-    const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
+    /// add 1990. 2001, 2008 and 2020 recessions
+    const render1990 = RenderRecession("1/1/1990", "3/1/1991");        
+    const render2001 = RenderRecession("1/1/2001", "12/31/2001");
+    const render2008 = RenderRecession("12/1/2007", "6/1/2009");
+    const render2020 = RenderRecession("1/1/2020", "12/31/2020");
 
     const TOOLTIP_BAR = d3.select("#mainvis")
                         .append("div")
@@ -641,40 +619,31 @@ function buildPlots() {
         .style("font-size","12px");
       
     // add a tooltip to the brushed main viz
-    const TOOLTIP = d3.select("#mainvis")
+    const MainTooltip = d3.select("#mainvis")
                         .append("div")
                         .attr("class", "tooltip")
                         .style("opacity", 0);
-      
-    // change the date time format
-                       
-    const dateFormat = d3.timeFormat("%-m/%-d/%Y");
                         
     function mouseMove(event, d) {
         let current_class = this.classList;
         let y_value = event.pageY / VisHeight;
-        let date = dateFormat(MainXScale.invert(event.offsetX - MainMargins.right));
+        let date = dateFormat(MainXScale.invert(event.offsetX - MainMargins.left));
         let value = Math.abs(MainYScale.invert(event.offsetY - MainMargins.top));
         let stroke_color = d3.select(this).style("stroke");
 
-      
-        
-        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
+        MainTooltip.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 50) + "px")
                 .style("background-color", stroke_color);
     };
 
-
     function mouseOver(event, d) {
-        TOOLTIP.style("opacity", 100);
+        MainTooltip.style("opacity", 100);
     };
-
 
     function mouseLeave(event, d) {
-        TOOLTIP.style("opacity", 0);
+        MainTooltip.style("opacity", 0);
     };
-
 
     MAIN.selectAll(".Unemployment_Claims")
         .on("mouseover", mouseOver)
@@ -700,11 +669,7 @@ function buildPlots() {
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
-
-
-
     };
-    
 });
 };
 
