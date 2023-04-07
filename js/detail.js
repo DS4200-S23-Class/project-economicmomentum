@@ -17,8 +17,7 @@ const indicator_info_text_payrolls = "All Employees: Total Nonfarm, commonly kno
 
 function detail_vis(index) {
   // reading in the data
-  d3.csv("data/GDPwDates.csv",
-  d3.csv("data/GDPwData.csv"), 
+  d3.csv("data/NoNullsData.csv",
   function(d){
     return { DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,

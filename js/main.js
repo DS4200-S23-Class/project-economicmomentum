@@ -1,4 +1,4 @@
-// constants for plot design
+// constants for main visual design
 const FRAME_HEIGHT = 510;
 const FRAME_WIDTH = 850; 
 const MARGINS = {left: 75, right: 5, top: 25, bottom: 25};
@@ -6,6 +6,7 @@ const MARGINS = {left: 75, right: 5, top: 25, bottom: 25};
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
 
+//constant for slider graph design
 const SLIDE_HEIGHT = 115;
 const SLIDE_WIDTH = FRAME_WIDTH; 
 const SLIDE_MARGINS = {left: MARGINS.left, right: MARGINS.right, top: 10, bottom: 20};
@@ -17,8 +18,7 @@ const SLIDE_VIS_W = SLIDE_WIDTH - MARGINS.left - MARGINS.right;
 function build_plots() {
 
   // reading in the data
-  d3.csv("data/NoNullsData.csv", 
-  d3.csv("data/GDPwDates.csv",
+  d3.csv("data/NoNullsData.csv",
   function(d){
     return {DATE : d3.timeParse("%-m/%-d/%Y")(d.DATE), 
             Payrolls : +d.Payrolls,
@@ -45,7 +45,7 @@ function build_plots() {
     
     const MaxUClaims = d3.max(data, (d) => { return d.UClaims; });
 
-
+    //creating list of all maximums
     const max_list = 
         {"Payroll" : MaxPayroll,
         "CPI" : MaxCPI,
@@ -61,7 +61,6 @@ function build_plots() {
 
     const domain = d3.extent(data, (d) => d.DATE);
 
-    console.log(domain)
     //setting scales
     const MainXScale = d3.scaleTime() 
                       .domain(domain) 
@@ -102,7 +101,7 @@ function build_plots() {
     const _2001_bar = draw_recession("1/1/2001", "12/31/2001");
     
     // add 2008 recession
-    const _2008_bar = draw_recession("1/1/2008", "12/31/2008");
+    const _2008_bar = draw_recession("12/1/2007", "6/1/2009");
     
     // add covid 2020 recession
     const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
@@ -417,7 +416,7 @@ function build_plots() {
     const _2001_bar_2 = draw_recession_slider("1/1/2001", "12/31/2001");
     
     // add 2008 recession
-    const _2008_bar_2 = draw_recession_slider("1/1/2008", "12/31/2008");
+    const _2008_bar_2 = draw_recession_slider("12/1/2007", "6/1/2009");
     
     // add covid 2020 recession
     const _2020_bar_2 = draw_recession_slider("1/1/2020", "12/31/2020");
@@ -548,7 +547,7 @@ function build_plots() {
     const _2001_bar = draw_recession("1/1/2001", "12/31/2001");
     
     // add 2008 recession
-    const _2008_bar = draw_recession("1/1/2008", "12/31/2008");
+    const _2008_bar = draw_recession("12/1/2007", "6/1/2009");
     
     // add covid 2020 recession
     const _2020_bar = draw_recession("1/1/2020", "12/31/2020");
@@ -731,7 +730,7 @@ function build_plots() {
 
     };
     
-}));
+});
 };
 
 build_plots();
