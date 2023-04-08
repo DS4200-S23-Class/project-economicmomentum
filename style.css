@@ -22,7 +22,10 @@ h2 {
 }
 
 .background {
-    background-color: rgb(237, 236, 236);
+    background-color: rgb(249, 249, 249);
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
 }
 
 #left {
@@ -54,6 +57,7 @@ h2 {
 #indicatorselection {
     height: 5%;
     object-fit: contain;
+    padding-left: 10px;
 }
 
 #detailgraph {
@@ -186,9 +190,27 @@ h2 {
   padding: 5px; 
 }
 
-/* info box styling */
 .fulloutline {
     border-width: 2px;
     border-style: solid;
     border-color: black;
+}
+
+.toprightoutline {
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-top-color: black;
+    border-right-width: 2px;
+    border-right-style: solid;
+    border-right-color: black;
+}
+
+.topoutline {
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-top-color: black;
+}
+
+.paddingleft {
+    padding-left: 5px;
 }
