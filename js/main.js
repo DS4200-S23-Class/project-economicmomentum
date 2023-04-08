@@ -251,32 +251,45 @@ function buildPlots() {
                         .style("opacity", 0);
 
     // add a tooltip to the main viz
+    // function mouseMove(event, d) {
+    //     let current_class = this.classList;
+    //     let maximum_class = maxList[current_class];
+    //     //setting values
+    //     let y_value = event.pageY / VisHeight;
+    //     let date = dateFormat(MainXScale.invert(event.offsetX - MainMargins.left));
+    //     let value = (MainYScale.invert(event.offsetY - MainMargins.top));
+    //     let value2 = value * maximum_class;
+    //     let stroke_color = d3.select(this).style("stroke");
+    //     // getting the class for the current object to be used in the tooltip
+        
+    //     // checking if the current class if unemployment rate because it needs to be formatted differently
+    //     if (current_class == "Unemployment_Rate") { 
+
+    //         TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value2))
+    //                 .style("left", (event.pageX + 10) + "px")
+    //                 .style("top", (event.pageY - 50) + "px")
+    //                 .style("background-color", stroke_color);
+                 
+    //     } else {
+
+    //         TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value2))
+    //                 .style("left", (event.pageX + 10) + "px")
+    //                 .style("top", (event.pageY - 50) + "px")
+    //                 .style("background-color", stroke_color);
+    //     };
+    // };
+
     function mouseMove(event, d) {
         let current_class = this.classList;
-        let maximum_class = maxList[current_class];
-        //setting values
         let y_value = event.pageY / VisHeight;
         let date = dateFormat(MainXScale.invert(event.offsetX - MainMargins.left));
-        let value = (MainYScale.invert(event.offsetY - MainMargins.top));
-        let value2 = value * maximum_class;
+        let value = Math.abs(MainYScale.invert(event.offsetY - MainMargins.top));
         let stroke_color = d3.select(this).style("stroke");
-        // getting the class for the current object to be used in the tooltip
-        
-        // checking if the current class if unemployment rate because it needs to be formatted differently
-        if (current_class == "Unemployment_Rate") { 
 
-            TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value2))
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 50) + "px")
-                    .style("background-color", stroke_color);
-                 
-        } else {
-
-            TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(",.0f")(value2))
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 50) + "px")
-                    .style("background-color", stroke_color);
-        };
+        TOOLTIP.html("Metric: " + current_class + "</br>" + "Date: " + date + "</br>" + "Value: " + d3.format(".2%")(value))
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 50) + "px")
+                .style("background-color", stroke_color);
     };
 
     function mouseOver(event, d) {
