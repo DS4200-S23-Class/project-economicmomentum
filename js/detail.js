@@ -12,18 +12,18 @@ const DetailVisHeight = DetailFrameHeight - DetailMargins.top - DetailMargins.bo
 const DetailVisWidth = DetailFrameWidth - DetailMargins.left - DetailMargins.right; 
 
 //constants for indicator header
-const ITextCPI = "CPI"
-const ITextPPI = "PPI"
-const ITextURate = "Unemployment Rate"
-const ITextUClaims = "Unemployment Claims"
-const ITextPayrolls = "Payrolls"
+const ITextCPI = "CPI";
+const ITextPPI = "PPI";
+const ITextURate = "Unemployment Rate";
+const ITextUClaims = "Unemployment Claims";
+const ITextPayrolls = "Payrolls";
 
 //constants for the indicator information
-const InfoTextCPI = "The Consumer Price Index is a price index of a basket of goods and services paid by consumers. Percent changes in the price index measure the inflation rate between any two time periods. The most common inflation metric is the percent change from one year ago. It can also represent the buying habits of consumers. CPIs are based on prices for food, clothing, shelter, and fuels; transportation fares; and sales taxes. CPI can be used to recognize periods of inflation and deflation. Significant increases in the CPI within a short time frame might indicate a period of inflation, and significant decreases in CPI within a short time frame might indicate a period of deflation."
-const InfoTextPPI = "The Producer Price Index is a family of indexes that measures the average change over time in selling prices received by domestic producers of goods and services from the perspective of the seller. There are three main PPI classification structures: industry classification (a measure of changes in industry's net), commodity classification (organizes products and services by similarity or material composition, regardless of the industry classification), and Commodity-based Final Demand-Intermediate Demand (FD-ID) System (Commodity-based FD-ID price indexes regroup commodity indexes according to the type of buyer and the amount of physical processing the products have undergone)."
-const InfoTextURate = "The unemployment rate represents the number of unemployed as a percentage of the labor force. Labor force data are restricted to people 16 years of age and older, who currently reside in 1 of the 50 states or the District of Columbia, who do not reside in institutions (e.g., penal and mental facilities, homes for the aged), and who are not on active duty in the Armed Forces. This rate is also defined as the U-3 measure of labor underutilization."
-const InfoTextUClaims = "An initial claim is a claim filed by an unemployed individual after a separation from an employer. The claim requests a determination of basic eligibility for the Unemployment Insurance program."
-const InfoTextPayrolls = "All Employees: Total Nonfarm, commonly known as Total Nonfarm Payroll, is a measure of the number of U.S. workers in the economy that excludes proprietors, private household employees, unpaid volunteers, farm employees, and the unincorporated self-employed. This measure accounts for approximately 80 percent of the workers who contribute to Gross Domestic Product (GDP). This measure provides useful insights into the current economic situation because it can represent the number of jobs added or lost in an economy. Increases in employment might indicate that businesses are hiring which might also suggest that businesses are growing. "
+const InfoTextCPI = "The Consumer Price Index is a price index of a basket of goods and services paid by consumers. Percent changes in the price index measure the inflation rate between any two time periods. The most common inflation metric is the percent change from one year ago. It can also represent the buying habits of consumers. CPIs are based on prices for food, clothing, shelter, and fuels; transportation fares; and sales taxes. CPI can be used to recognize periods of inflation and deflation. Significant increases in the CPI within a short time frame might indicate a period of inflation, and significant decreases in CPI within a short time frame might indicate a period of deflation.";
+const InfoTextPPI = "The Producer Price Index is a family of indexes that measures the average change over time in selling prices received by domestic producers of goods and services from the perspective of the seller. There are three main PPI classification structures: industry classification (a measure of changes in industry's net), commodity classification (organizes products and services by similarity or material composition, regardless of the industry classification), and Commodity-based Final Demand-Intermediate Demand (FD-ID) System (Commodity-based FD-ID price indexes regroup commodity indexes according to the type of buyer and the amount of physical processing the products have undergone).";
+const InfoTextURate = "The unemployment rate represents the number of unemployed as a percentage of the labor force. Labor force data are restricted to people 16 years of age and older, who currently reside in 1 of the 50 states or the District of Columbia, who do not reside in institutions (e.g., penal and mental facilities, homes for the aged), and who are not on active duty in the Armed Forces. This rate is also defined as the U-3 measure of labor underutilization.";
+const InfoTextUClaims = "An initial claim is a claim filed by an unemployed individual after a separation from an employer. The claim requests a determination of basic eligibility for the Unemployment Insurance program.";
+const InfoTextPayrolls = "All Employees: Total Nonfarm, commonly known as Total Nonfarm Payroll, is a measure of the number of U.S. workers in the economy that excludes proprietors, private household employees, unpaid volunteers, farm employees, and the unincorporated self-employed. This measure accounts for approximately 80 percent of the workers who contribute to Gross Domestic Product (GDP). This measure provides useful insights into the current economic situation because it can represent the number of jobs added or lost in an economy. Increases in employment might indicate that businesses are hiring which might also suggest that businesses are growing.";
 
 function MakeDetailVis(index) {
   // reading in the data
@@ -48,7 +48,7 @@ function MakeDetailVis(index) {
     //getting dates and date range
     const dates = [];
     for (let obj of data) {
-      dates.push(obj.DATE)
+      dates.push(obj.DATE);
     }
     const domain = d3.extent(data, (d) => d.DATE);
 
@@ -418,7 +418,7 @@ function submitClicked() {
   
   // rendering the chosen indicator
   MakeDetailVis(selected_index);
-}
+};
 
 // altering the detailtextbox
 function UpdateDetail(x) {
@@ -426,25 +426,25 @@ function UpdateDetail(x) {
   // checking the given index and altering the contents of detailtextbox 
   if (x == 1) {
     document.getElementById('indicatorinfotext').innerHTML = InfoTextURate;
-  } 
+  };
   
   if (x == 2) {
     document.getElementById('indicatorinfotext').innerHTML = InfoTextCPI;
-  } 
+  } ;
   
   if (x == 3) {
     document.getElementById('indicatorinfotext').innerHTML = InfoTextPPI;
-  } 
+  }; 
   
   if (x == 4) {
     document.getElementById('indicatorinfotext').innerHTML = InfoTextUClaims;
-  } 
+  };
   
   if (x == 0) {
     document.getElementById('indicatorinfotext').innerHTML = InfoTextPayrolls;
-  }
+  };
 
-}
+};
 
 // Add event handler to button 
 document.getElementById('selectedindicator').addEventListener('change', submitClicked);
